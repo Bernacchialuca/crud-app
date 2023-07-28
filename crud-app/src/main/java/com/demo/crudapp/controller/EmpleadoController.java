@@ -4,9 +4,11 @@ import com.demo.crudapp.entity.Ciudad;
 import com.demo.crudapp.entity.Empleado;
 import com.demo.crudapp.service.CiudadService;
 import com.demo.crudapp.service.EmpleadoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class EmpleadoController {
 
         List<Empleado> listaDeEmpleados = this.empleadoService.getEmpleados();
         model.addAttribute("listaDeEmpleados", listaDeEmpleados);
-        model.addAttribute("titulo", "Listado de empleados");
+        model.addAttribute("titulo", "Sistema de gestión de empleados");
         return "verEmpleados";
 
         }
@@ -44,9 +46,19 @@ public class EmpleadoController {
     }
 
     @PostMapping("/guardar")
-    public String guardarEmpleado(@ModelAttribute Empleado empleado) {
-        this.empleadoService.save(empleado);
-        return "redirect:/empleados/listado";
+    public String guardarEmpleado(@Valid @ModelAttribute Empleado empleado, BindingResult result, Model model) {
+        List<Ciudad> listaDeCiudades = this.ciudadService.getCiudades();
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Crear empleado");
+            model.addAttribute("empleado", empleado);
+            model.addAttribute("listaDeCiudades", listaDeCiudades);
+            return "formularioEmpleado";
+        }
+
+            this.empleadoService.save(empleado);
+            return "redirect:/empleados/listado";
+
+
     }
 
     @GetMapping("/eliminar/{id}")
