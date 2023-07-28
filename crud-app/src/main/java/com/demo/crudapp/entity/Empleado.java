@@ -7,8 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name="Cliente")
-public class Cliente {
+@Table(name="Empleado")
+public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,6 +16,8 @@ public class Cliente {
     private String apellido;
     private String telefono;
     private String email;
+    private Integer salario;
+    private String puesto;
     @ManyToOne
     @JoinColumn(name = "id_ciudad")
     private Ciudad ciudad;

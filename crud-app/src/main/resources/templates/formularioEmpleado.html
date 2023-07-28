@@ -10,7 +10,7 @@
     <br>
     <h1 th:text="${titulo}"></h1>
     <br>
-    <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post"
+    <form th:action="@{/empleados/guardar}" th:object="${empleado}" method="post"
           style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
 
         <input type="hidden" th:field="*{id}">
@@ -38,6 +38,18 @@
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="email">Email</label>
             <input tabindex="4" th:field="*{email}" type="email" class="form-control m-0" id="email"
+                   placeholder="email@example.com"
+                   autofocus="true" required>
+        </div>
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="salario">Salario</label>
+            <input tabindex="4" th:field="*{salario}" type="email" class="form-control m-0" id="salario"
+                   placeholder="U$D xxx.xxx"
+                   autofocus="true" required>
+        </div>
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="puesto">Puesto</label>
+            <input tabindex="4" th:field="*{puesto}" type="email" class="form-control m-0" id="puesto"
                    placeholder="email@example.com"
                    autofocus="true" required>
         </div>
