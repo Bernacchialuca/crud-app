@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="template :: head">
+    <meta charset="UTF-8">
+    <title>prueba</title>
+</head>
+<body>
+<header th:replace="template :: header"></header>
+<div class="container">
+    <br>
+    <h1 th:text="${titulo}"></h1>
+    <br>
+    <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post"
+          style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="nombre">Nombre/s</label>
+            <input tabindex="1" th:field="*{nombre}" type="text" class="form-control m-0" id="nombre"
+                   placeholder="Example: Mark"
+                   autofocus="true" required>
+        </div>
+
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="apellido">Apellido/s</label>
+            <input tabindex="2" th:field="*{apellido}" type="text" class="form-control m-0"
+                   id="apellido"
+                   placeholder="Example: Johnson" required>
+        </div>
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="telefono">Telefono</label>
+            <input tabindex="3" th:field="*{telefono}" type="text" class="form-control m-0"
+                   id="telefono"
+                   placeholder="Example: 12345678" required>
+        </div>
+
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="email">Email</label>
+            <input tabindex="4" th:field="*{email}" type="email" class="form-control m-0" id="email"
+                   placeholder="email@example.com"
+                   autofocus="true" required>
+        </div>
+
+        <div class="mb-3 col-sm-12 col-md-6">
+            <label for="ciudades">Seleccioná tu ciudad</label>
+            <select tabindex="5" id="ciudades" class="form-select" aria-label="generaciones"
+                    th:field="*{ciudad}" required>
+                <option th:value="0">Selecciona tu ciudad</option>
+                <option th:each="ciudad : ${listaDeCiudades}"
+                        th:value="${ciudad.id}"
+                        th:text="${ciudad.ciudad}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Guardar</button>
+    </form>
+</div>
+<footer th:replace="template :: footer"></footer>
+</body>
+</html>

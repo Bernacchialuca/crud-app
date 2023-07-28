@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title th:text="${titulo}"></title>
+    <link rel="icon" href="../svg/Spring_Boot.svg">
+    <link rel="stylesheet" th:href="@{/css/cdn.jsdelivr.net_npm_bootstrap@5.2.3_dist_css_bootstrap.min.css}">
+    <style>
+        .nav-item:hover{
+        background-color: #3d3d3d;
+        }
+    </style>
+</head>
+<body>
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2">
+        <img style="width: 45px; height: 45px; margin-right:50px" src="../svg/Spring_Boot.svg">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active fs-5" aria-current="page" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" th:href="@{/clientes/listado}">Clientes</a>
+                    </li>
+                </ul>
+    </nav>
+</header>
+<div class="container"></div>
+<footer th:fragment="footer" class="bg-dark text-center text-white fixed-bottom p-3">
+    <div>Crud App - Bernacchia Luca</div>
+</footer>
+</body>
+<script type="text/javascript"
+        th:href="@{/js/cdn.jsdelivr.net_npm_bootstrap@5.2.3_dist_js_bootstrap.bundle.min.js}"></script>
+</html>
