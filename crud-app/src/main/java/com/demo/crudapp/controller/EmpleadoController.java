@@ -66,9 +66,16 @@ public class EmpleadoController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminarEmpleado(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+
+        Optional<Empleado> empleado = this.empleadoService.getEmpleadoById(id);
+        String nombreCompleto = empleado.map(e -> e.getNombre() + " " + e.getApellido()).orElse("empleado");
         this.empleadoService.delete(id);
+
+        redirectAttributes.addFlashAttribute("eliminado", "El empleado " + nombreCompleto + " ha sido eliminado correctamente");
+
         return "redirect:/empleados/listado";
     }
+
 
     @GetMapping("/editar/{id}")
     public String editarempleado(@PathVariable("id") Long idEmpleado, Model model) {

@@ -16,9 +16,8 @@
   <br><br>
 
   <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${success}" th:text="${success}" id="successDiv"></div>
-  <div class="alert alert-success" role="alert" id="deleteAlert" style="display: none; width: fit-content">
-    El empleado se ha eliminado correctamente.
-  </div>
+  <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${eliminado}" th:text="${eliminado}" id="eliminadoDiv"></div>
+
 
   <table class="table table-striped">
     <thead>
