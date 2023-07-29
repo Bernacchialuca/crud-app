@@ -2,6 +2,7 @@
 <html xmlns:th="http://thymeleaf.org">
 <head th:replace="template :: head">
     <meta charset="UTF-8">
+    <link th:href="@{/css/formEmpleado.css}" rel="stylesheet" />
 </head>
 <body>
 <header th:replace="template :: header"></header>
@@ -9,53 +10,52 @@
     <br>
     <h1 th:text="${titulo}"></h1>
     <br>
-    <form th:action="@{/empleados/guardar}" th:object="${empleado}" method="post"
-          style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <form class="formulario-empleado" th:action="@{/empleados/guardar}" th:object="${empleado}" method="post">
 
         <input type="hidden" th:field="*{id}">
         
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="nombre">Nombre/s</label>
-            <input tabindex="1" th:field="*{nombre}" type="text" class="form-control m-0" id="nombre"
+            <input tabindex="1" th:field="*{nombre}" type="text" class="form-control mb-3" id="nombre"
                    placeholder="Example: Mark">
-            <span class="form-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+            <span class="errorFormulario" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
         </div>
 
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="apellido">Apellido/s</label>
-            <input tabindex="2" th:field="*{apellido}" type="text" class="form-control m-0"
+            <input tabindex="2" th:field="*{apellido}" type="text" class="form-control mb-3"
                    id="apellido"
                    placeholder="Example: Johnson" >
-            <span class="form-error" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
+            <span class="errorFormulario" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
         </div>
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="telefono">Telefono</label>
-            <input tabindex="3" th:field="*{telefono}" type="text" class="form-control m-0"
+            <input tabindex="3" th:field="*{telefono}" type="text" class="form-control mb-3"
                    id="telefono"
                    placeholder="Example: 12345678" >
-            <span class="form-error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+            <span class="errorFormulario" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
         </div>
 
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="email">Email</label>
-            <input tabindex="4" th:field="*{email}" type="text" class="form-control m-0" id="email"
+            <input tabindex="4" th:field="*{email}" type="text" class="form-control mb-3" id="email"
                    placeholder="email@example.com"
-                   autofocus="true" >
-            <span class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                   >
+            <span class="errorFormulario" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         </div>
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="salario">Salario</label>
-            <input tabindex="5" th:field="*{salario}" type="number" class="form-control m-0" id="salario"
+            <input tabindex="5" th:field="*{salario}" type="number" class="form-control mb-3" id="salario"
                    placeholder="U$D xxx.xxx"
-                   autofocus="true">
-            <span class="form-error" th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}"></span>
+                   >
+            <span class="errorFormulario" th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}"></span>
         </div>
         <div class="mb-3 col-sm-12 col-md-6">
             <label for="puesto">Puesto</label>
-            <input tabindex="6" th:field="*{puesto}" type="text" class="form-control m-0" id="puesto"
+            <input tabindex="6" th:field="*{puesto}" type="text" class="form-control mb-3" id="puesto"
                    placeholder="Full Stack Sr"
-                   autofocus="true">
-            <span class="form-error" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></span>
+                   >
+            <span class="errorFormulario" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></span>
         </div>
 
         <div class="mb-3 col-sm-12 col-md-6">

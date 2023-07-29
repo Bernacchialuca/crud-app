@@ -1,0 +1,20 @@
+.errorFormulario {
+color:red;
+background-color: #ffdede;
+border: 1px solid red;
+border-radius: 8px;
+padding: 5px;
+}
+
+.formulario-empleado {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.img-acciones {
+width: 35px;
+height: 35px;
+margin-right:5px;
+}

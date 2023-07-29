@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head th:insert="~{template :: head}">
+<head th:replace="template :: head">
   <meta charset="UTF-8">
-  <title>Listado de s</title>
+  <link th:href="@{/css/formEmpleado.css}" rel="stylesheet" />
 </head>
 <body>
 <header th:replace="template :: header"></header>
@@ -30,18 +30,18 @@
       <td th:text="${empleados.apellido}"></td>
       <td th:text="${empleados.telefono}"></td>
       <td th:text="${empleados.email}"></td>
-      <td th:text="${empleados.salario}"></td>
-      <td th:text="${'U$D ' + empleados.puesto}"></td>
+      <td th:text="${'U$D ' + empleados.salario}"></td>
+      <td th:text="${empleados.puesto}"></td>
       <td th:text="${empleados.ciudad?.ciudad}"></td>
       <th>
-        <a th:href="@{'/empleados/editar/' + ${empleados.id}}"><img style="width: 35px; height: 35px; margin-right:5px" src="../svg/edit-square-icon.svg"></a>
-        <a th:href="@{'/empleados/eliminar/' + ${empleados.id}}"><img style="width: 35px; height: 35px;" src="../svg/close-square-icon.svg"></a>
+        <a th:href="@{'/empleados/editar/' + ${empleados.id}}"><img class="img-acciones"  th:src="@{/svg/edit-square-icon.svg}"></a>
+        <a th:href="@{'/empleados/eliminar/' + ${empleados.id}}"><img class="img-acciones" th:src="@{/svg/close-square-icon.svg}"></a>
       </th>
 
     </tr>
   </table>
 </div>
 
-<footer th:insert="~{template :: footer}"></footer>
+<footer th:replace="template :: footer"></footer>
 </body>
 </html>

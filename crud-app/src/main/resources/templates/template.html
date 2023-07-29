@@ -3,18 +3,15 @@
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title th:text="${titulo}"></title>
-    <link rel="icon" th:href="@{svg/Spring_Boot.svg}">
+    <link rel="icon" th:href="@{/svg/Spring_Boot.svg}">
+    <link th:href="@{/css/formEmpleado.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/cdn.jsdelivr.net_npm_bootstrap@5.2.3_dist_css_bootstrap.min.css}">
-    <style>
-        .nav-item:hover{
-        background-color: #3d3d3d;
-        }
-    </style>
 </head>
 <body>
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2">
-        <img style="width: 45px; height: 45px; margin-right:50px" th:src="@{/svg/Spring_Boot.svg}">
+        <img class="img-logo" th:src="@{/svg/Spring_Boot.svg}">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active fs-5" aria-current="page" th:href="@{/home}">Home</a>
