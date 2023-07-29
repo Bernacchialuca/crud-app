@@ -29,7 +29,7 @@
             <span class="errorFormulario" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
         </div>
         <div class="mb-3 col-sm-12 col-md-6">
-            <label for="telefono">Telefono</label>
+            <label for="telefono">Tel&eacute;fono</label>
             <input tabindex="3" th:field="*{telefono}" type="text" class="form-control mb-3"
                    id="telefono"
                    placeholder="Example: 12345678" >
@@ -59,10 +59,10 @@
         </div>
 
         <div class="mb-3 col-sm-12 col-md-6">
-            <label for="ciudades">Seleccioná tu ciudad</label>
+            <label for="ciudades">Seleccion&aacute; tu ciudad</label>
             <select tabindex="7" id="ciudades" class="form-select" aria-label="generaciones"
                     th:field="*{ciudad}" >
-                <option th:value="0">Selecciona tu ciudad</option>
+                <option th:value="0">Seleccion&aacute; tu ciudad...</option>
                 <option th:each="ciudad : ${listaDeCiudades}"
                         th:value="${ciudad.id}"
                         th:text="${ciudad.ciudad}">
