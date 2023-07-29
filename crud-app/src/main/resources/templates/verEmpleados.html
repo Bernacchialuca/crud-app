@@ -15,8 +15,8 @@
   <a th:href="@{/empleados/crear}" class="btn btn-secondary">Agregar empleado</a>
   <br><br>
 
-  <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${success}" th:text="${success}"></div>
-  <div class="alert alert-success" role="alert" id="deleteAlert" style="display: none;">
+  <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${success}" th:text="${success}" id="successDiv"></div>
+  <div class="alert alert-success" role="alert" id="deleteAlert" style="display: none; width: fit-content">
     El empleado se ha eliminado correctamente.
   </div>
 
@@ -76,7 +76,6 @@
 </div>
 
 <footer th:replace="template :: footer"></footer>
-
 <script th:src="@{/js/main.js}"></script>
 </body>
 

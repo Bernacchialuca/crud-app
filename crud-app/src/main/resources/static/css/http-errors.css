@@ -1,0 +1,23 @@
+.container {
+display: flex;
+flex-direction:column;
+justify-content: center;
+align-items: center;
+}
+
+.status {
+font-size: 20px;
+font-family: system-ui;
+}
+
+.img-400 {
+margin-top:50px;
+border-radius: 50%;
+}
+
+.img-400,
+.img-404,
+.img-500{
+height: 80%;
+width:80%;
+}

@@ -1,28 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   const showModal = (employeeName, employeeLastName, url) => {
     const deleteModal = document.getElementById('deleteModal');
+    deleteModal.style.display = 'block';
+    document.getElementById('employeeName').textContent = employeeName;
+    document.getElementById('employeeLastName').textContent = employeeLastName;
+
     const acceptButton = deleteModal.querySelector('#acceptButton');
     const cancelButton = deleteModal.querySelector('#cancelButton');
     const xButton = deleteModal.querySelector('#xButton');
 
-    document.getElementById('employeeName').textContent = employeeName;
-    document.getElementById('employeeLastName').textContent = employeeLastName;
-
     acceptButton.addEventListener('click', () => {
-      fetch(url, {
-        method: 'GET'
-      })
-      .then(response => {
-        if (response.ok) {
-          closeModal();
-          showDeleteAlert();
-        } else {
-          console.error('Error al eliminar empleado');
-        }
-      })
-      .catch(error => {
-        console.error('Error en la petición de eliminación');
-      });
+      window.location.href = url;
     });
 
     const closeModal = () => {
@@ -31,17 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cancelButton.addEventListener('click', closeModal);
     xButton.addEventListener('click', closeModal);
-
-    deleteModal.style.display = 'block';
-  };
-
-  const showDeleteAlert = () => {
-    const deleteAlert = document.getElementById('deleteAlert');
-    deleteAlert.style.display = 'block';
-
-    setTimeout(() => {
-      deleteAlert.style.display = 'none';
-    }, 3000);
   };
 
   const deleteButtons = document.querySelectorAll('a[name="deleteButton"]');
@@ -62,3 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+ function ocultarSuccessDiv() {
+    var successDiv = document.getElementById('successDiv');
+    if (successDiv.style.display !== 'none') {
+      setTimeout(function() {
+        successDiv.style.display = 'none';
+      }, 3000); // 3000 milisegundos = 3 segundos
+    }
+  }
+
+  // Llama a la función para que comience a contar el tiempo cuando se cargue la página
+  document.addEventListener('DOMContentLoaded', ocultarSuccessDiv);
