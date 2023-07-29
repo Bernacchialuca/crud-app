@@ -1,24 +1,40 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Función para mostrar el modal al hacer clic en el botón de eliminar
-  var deleteButtons = document.querySelectorAll('a[name="deleteButton"]');
-  deleteButtons.forEach(function(button) {
-    button.addEventListener('click', function(event) {
-      event.preventDefault(); // Evitar que el enlace realice su acción predeterminada (navegar a la URL)
-      var url = this.getAttribute('href'); // Obtener la URL de eliminación del atributo href del enlace
-      var deleteModal = document.getElementById('deleteModal');
-      var acceptButton = deleteModal.querySelector('.btn-primary');
+document.addEventListener('DOMContentLoaded', () => {
+  const showModal = (employeeName, employeeLastName, url) => {
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.style.display = 'block';
+    document.getElementById('employeeName').textContent = employeeName;
+    document.getElementById('employeeLastName').textContent = employeeLastName;
 
-      deleteModal.style.display = 'block';
+    const acceptButton = deleteModal.querySelector('#acceptButton');
+    const cancelButton = deleteModal.querySelector('#cancelButton');
+    const xButton = deleteModal.querySelector('#xButton');
 
-      acceptButton.addEventListener('click', function() {
-        window.location.href = url;
-      });
+    acceptButton.addEventListener('click', () => {
+      window.location.href = url;
+    });
+
+    const closeModal = () => {
+      deleteModal.style.display = 'none';
+    };
+
+    cancelButton.addEventListener('click', closeModal);
+    xButton.addEventListener('click', closeModal);
+  };
+
+  const deleteButtons = document.querySelectorAll('a[name="deleteButton"]');
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const url = button.getAttribute('href');
+      const employeeName = button.closest('tr').querySelectorAll('.employee-name')[0].textContent;
+      const employeeLastName = button.closest('tr').querySelectorAll('.employee-name')[1].textContent;
+      showModal(employeeName, employeeLastName, url);
     });
   });
 
-  var deleteModal = document.getElementById('deleteModal');
-  deleteModal.addEventListener('click', function(event) {
-    if (event.target === deleteModal || event.target.classList.contains('btn-secondary')) {
+  const deleteModal = document.getElementById('deleteModal');
+  deleteModal.addEventListener('click', (event) => {
+    if (event.target === deleteModal) {
       deleteModal.style.display = 'none';
     }
   });

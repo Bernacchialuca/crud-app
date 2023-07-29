@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public class EmpleadoController {
     }
 
     @PostMapping("/guardar")
-    public String guardarEmpleado(@Valid @ModelAttribute Empleado empleado, BindingResult result, Model model) {
+    public String guardarEmpleado(@Valid @ModelAttribute Empleado empleado, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         List<Ciudad> listaDeCiudades = this.ciudadService.getCiudades();
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Crear empleado");
@@ -55,18 +56,18 @@ public class EmpleadoController {
             return "formularioEmpleado";
         }
 
-            this.empleadoService.save(empleado);
-            return "redirect:/empleados/listado";
+        String action = (empleado.getId() == null) ? "creado" : "editado";
+        redirectAttributes.addFlashAttribute("success", "El empleado " + empleado.getNombre() + " " + empleado.getApellido() +  " fue " + action + " correctamente");
 
-
+        this.empleadoService.save(empleado);
+        return "redirect:/empleados/listado";
     }
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminarEmpleado(@PathVariable("id") Long id) {
 
+    @GetMapping("/eliminar/{id}")
+    public String eliminarEmpleado(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         this.empleadoService.delete(id);
         return "redirect:/empleados/listado";
-
     }
 
     @GetMapping("/editar/{id}")
