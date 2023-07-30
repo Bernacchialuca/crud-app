@@ -20,6 +20,8 @@ public class Empleado {
     @NotNull
     @Size(min = 5, max=8, message = "El campo telefono debe tener entre 5 y 8 números")
     private String telefono;
+    @NotNull(message = "El campo DNI debe estar lleno")
+    private Long dni;
     @NotEmpty(message = "El campo email no puede estar vacío")
     @Email(message = "Ingresa un formato valido de email")
     private String email;

@@ -65,5 +65,23 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         return empleadoRepository.findAll(Sort.by(Sort.Direction.ASC, "salario"));
     }
 
+    @Override
+    public List<Empleado> buscarEmpleados(String nombreApellido, String filtro) {
+        switch (filtro) {
+            case "mayor-salario":
+                return buscarPorSalarioMayor();
+            case "menor-salario":
+                return buscarPorSalarioMenor();
+            case "Project Manager":
+            case "Team Leader":
+            case "Frontend Developer":
+            case "Backend Developer":
+            case "Full Stack Developer":
+                return buscarPorPuesto(filtro);
+            default:
+                return buscarPorNombreYApellido(nombreApellido);
+        }
+    }
+
 
 }

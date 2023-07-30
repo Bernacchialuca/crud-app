@@ -37,11 +37,8 @@
     </form>
     <br><br>
 
-    <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${success}" th:text="${success}"
-         id="successDiv"></div>
-    <div class="alert alert-success" role="alert" id="deleteAlert" style="display: none; width: fit-content">
-        El empleado se ha eliminado correctamente.
-    </div>
+    <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${success}" th:text="${success}" id="successDiv"></div>
+    <div class="alert alert-success" role="alert" id="deleteAlert" th:if="${eliminado}" th:text="${eliminado}" style="display: inline-block"></div>
 
     <div style="display: inline-block;
 " class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
@@ -49,7 +46,7 @@
     <table class="table table-striped" th:if="${not listaDeEmpleados.isEmpty()}">
         <thead>
         <tr>
-            <th scope="col">ID</th>
+            <th scope="col">DNI</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">Tel&eacute;fono</th>
@@ -62,7 +59,7 @@
         </thead>
         <tbody>
         <tr th:each="empleados : ${listaDeEmpleados}">
-            <td th:text="${empleados.id}"></td>
+            <td th:text="${empleados.dni}"></td>
             <td th:text="${empleados.nombre}" class="employee-name"></td>
             <td th:text="${empleados.apellido}" class="employee-name"></td>
             <td th:text="${empleados.telefono}"></td>

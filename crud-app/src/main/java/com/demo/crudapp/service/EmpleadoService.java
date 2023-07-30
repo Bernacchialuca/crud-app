@@ -20,4 +20,6 @@ public interface EmpleadoService {
     List<Empleado> buscarPorSalarioMayor();
 
     List<Empleado> buscarPorSalarioMenor();
+
+    List<Empleado> buscarEmpleados(String nombreApellido, String filtro);
 }

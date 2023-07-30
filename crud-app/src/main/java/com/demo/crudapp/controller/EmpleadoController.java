@@ -57,7 +57,8 @@ public class EmpleadoController {
         }
 
         String action = (empleado.getId() == null) ? "creado" : "editado";
-        redirectAttributes.addFlashAttribute("success", "El empleado " + empleado.getNombre() + " " + empleado.getApellido() +  " fue " + action + " correctamente");
+        String mensaje = "El empleado " + empleado.getNombre() + " " + empleado.getApellido() +  " fue " + action + " correctamente";
+        redirectAttributes.addFlashAttribute("success", mensaje);
 
         this.empleadoService.save(empleado);
         return "redirect:/empleados/listado";
@@ -68,14 +69,12 @@ public class EmpleadoController {
     public String eliminarEmpleado(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
         Optional<Empleado> empleado = this.empleadoService.getEmpleadoById(id);
-        String nombreCompleto = empleado.map(e -> e.getNombre() + " " + e.getApellido()).orElse("empleado");
         this.empleadoService.delete(id);
+        String mensaje = "El empleado " + empleado.get().getNombre() + " " + empleado.get().getApellido() + " fue eliminado correctamente";
 
-        redirectAttributes.addFlashAttribute("eliminado", "El empleado " + nombreCompleto + " ha sido eliminado correctamente");
-
+        redirectAttributes.addFlashAttribute("eliminado", mensaje);
         return "redirect:/empleados/listado";
     }
-
 
     @GetMapping("/editar/{id}")
     public String editarempleado(@PathVariable("id") Long idEmpleado, Model model) {
@@ -94,26 +93,7 @@ public class EmpleadoController {
     @GetMapping("/search")
     public String buscarEmpleados(@RequestParam(required = false) String nombreApellido, @RequestParam(required = false) String filtro, Model model) {
 
-        List<Empleado> empleadosBuscados;
-
-        switch (filtro) {
-            case "mayor-salario":
-                empleadosBuscados = empleadoService.buscarPorSalarioMayor();
-                break;
-            case "menor-salario":
-                empleadosBuscados = empleadoService.buscarPorSalarioMenor();
-                break;
-            case "Project Manager":
-            case "Team Leader":
-            case "Frontend Developer":
-            case "Backend Developer":
-            case "Full Stack Developer":
-                empleadosBuscados = empleadoService.buscarPorPuesto(filtro);
-                break;
-            default:
-                empleadosBuscados = empleadoService.buscarPorNombreYApellido(nombreApellido);
-                break;
-        }
+        List<Empleado> empleadosBuscados = this.empleadoService.buscarEmpleados(nombreApellido,filtro);
 
         model.addAttribute("listaDeEmpleados", empleadosBuscados);
         return "verEmpleados";
