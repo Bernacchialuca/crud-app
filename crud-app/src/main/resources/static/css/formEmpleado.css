@@ -17,4 +17,34 @@ flex-direction: column;
 width: 35px;
 height: 35px;
 margin-right:5px;
+transition: border-radius 0.4s ease-in-out;
+}
+
+.img-acciones:hover {
+ border-radius:50%;
+}
+
+.container-header-table {
+display:flex;
+flex-direction:row;
+justify-content: space-between;
+}
+
+.section-search {
+display:flex;
+flex-direction:row;
+gap:30px
+}
+
+.section-filtro {
+display:flex;
+flex-direction:row;
+gap:15px
+}
+
+
+
+.btn:hover {
+transform: scale(1.01);
+ background-color: #ff7f50;
 }

@@ -13,5 +13,5 @@ public interface EmpleadoService {
 
     void save(Empleado empleado);
     void delete(Long id);
-
+    List<Empleado> buscarPorNombreYApellido(String nombreApellido);
 }

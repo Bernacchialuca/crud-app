@@ -84,4 +84,12 @@ public class EmpleadoController {
 
     }
 
+    @GetMapping("/search")
+    public String buscarEmpleados(@RequestParam(required = false) String nombreApellido, Model model) {
+
+        List<Empleado> empleadosBuscados = this.empleadoService.buscarPorNombreYApellido(nombreApellido);
+        model.addAttribute("listaDeEmpleados", empleadosBuscados);
+        return "verEmpleados";
+    }
+
 }

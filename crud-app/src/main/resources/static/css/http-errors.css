@@ -15,9 +15,13 @@ margin-top:50px;
 border-radius: 50%;
 }
 
+.img-500 {
+height: 50%;
+width:50%;
+}
+
 .img-400,
-.img-404,
-.img-500{
+.img-404,{
 height: 80%;
 width:80%;
 }
