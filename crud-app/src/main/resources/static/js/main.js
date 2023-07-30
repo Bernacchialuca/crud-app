@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
  function ocultarSuccessDiv() {
-    var successDiv = document.getElementById('successDiv');
+    const successDiv = document.getElementById('successDiv');
     if (successDiv.style.display !== 'none') {
       setTimeout(function() {
         successDiv.style.display = 'none';
@@ -49,5 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+   function ocultarEliminadoDiv() {
+      const eliminadoDiv = document.getElementById('eliminadoDiv');
+      if (eliminadoDiv.style.display !== 'none') {
+        setTimeout(function() {
+          eliminadoDiv.style.display = 'none';
+        }, 3000); // 3000 milisegundos = 3 segundos
+      }
+    }
+
   // Llama a la función para que comience a contar el tiempo cuando se cargue la página
   document.addEventListener('DOMContentLoaded', ocultarSuccessDiv);
+  document.addEventListener('DOMContentLoaded', ocultarEliminadoDiv);
