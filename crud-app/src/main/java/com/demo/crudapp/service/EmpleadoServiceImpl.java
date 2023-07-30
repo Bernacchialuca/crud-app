@@ -3,6 +3,8 @@ package com.demo.crudapp.service;
 import com.demo.crudapp.entity.Empleado;
 import com.demo.crudapp.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +83,11 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             default:
                 return buscarPorNombreYApellido(nombreApellido);
         }
+    }
+
+    @Override
+    public Page<Empleado> getAll(Pageable pageable) {
+        return this.empleadoRepository.findAll(pageable);
     }
 
 

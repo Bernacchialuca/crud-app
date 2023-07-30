@@ -6,6 +6,8 @@ import com.demo.crudapp.service.CiudadService;
 import com.demo.crudapp.service.EmpleadoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/empleados")
@@ -25,14 +30,27 @@ public class EmpleadoController {
     private CiudadService ciudadService;
 
     @GetMapping("/listado")
-    public String verEmpleados(Model model) {
+    public String verEmpleados(@RequestParam Map<String, Object> params, Model model) {
 
-        List<Empleado> listaDeEmpleados = this.empleadoService.getEmpleados();
-        model.addAttribute("listaDeEmpleados", listaDeEmpleados);
-        model.addAttribute("titulo", "Sistema de gestión de empleados");
+        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Empleado> pagePersona = this.empleadoService.getAll(pageRequest);
+
+        int totalPage = pagePersona.getTotalPages();
+
+        if(totalPage > 0) {
+            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
+            model.addAttribute("pages", pages);
+        }
+
+        model.addAttribute("prevPage", page);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("nextPage", page);
+        model.addAttribute("listaDeEmpleados", pagePersona.getContent());
         return "verEmpleados";
 
-        }
+    }
 
     @GetMapping("/crear")
     public String guardarEmpleado(Model model) {

@@ -76,6 +76,19 @@
         </tr>
         </tbody>
     </table>
+   <div class="row">
+       <div class="col-md2"></div>
+       <div class="col-md8">
+           <nav aria-label="Pagination">
+               <ul class="pagination justify-content-center">
+                    <li class="page-item" th:each="page : ${pages}">
+                        <a class="page-link" th:href="@{|/empleados/listado?page=${page}|}" th:text="${page}"></a>
+                    </li>
+               </ul>
+           </nav>
+       </div>
+       <div class="col-md2"></div>
+   </div>
 </div>
 
 <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
