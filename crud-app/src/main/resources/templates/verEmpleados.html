@@ -21,15 +21,17 @@
             </div>
         </div>
         <div class="section-search">
-            <select class="form-select">
-                <option>Mayor a menor: salario</option>
-                <option>Menor a mayor: salario</option>
-                <option>Project Manager</option>
-                <option>Team Leader</option>
-                <option>Puesto: Frontend Developer</option>
-                <option>Puesto: Backend Developer</option>
-                <option>Puesto: Full Stack Developer</option>
+            <select class="form-select" name="filtro">
+                <option value="">Filtros ⇅ </option>
+                <option value="menor-salario">Salario: Menor a mayor</option>
+                <option value="mayor-salario">Salario: Mayor a menor</option>
+                <option value="Project Manager">Puesto: Project Manager</option>
+                <option value="Team Leader">Puesto: Team Leader</option>
+                <option value="Frontend Developer">Puesto: Frontend Developer</option>
+                <option value="Backend Developer">Puesto: Backend Developer</option>
+                <option value="Full Stack Developer">Puesto: Full Stack Developer</option>
             </select>
+
             <button class="btn btn-dark">Filtrar</button>
         </div>
     </form>
@@ -41,7 +43,8 @@
         El empleado se ha eliminado correctamente.
     </div>
 
-    <div style="display: inline-block;" class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
+    <div style="display: inline-block;
+" class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
 
     <table class="table table-striped" th:if="${not listaDeEmpleados.isEmpty()}">
         <thead>

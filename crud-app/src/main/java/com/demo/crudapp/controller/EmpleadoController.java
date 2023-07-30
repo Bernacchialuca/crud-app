@@ -85,9 +85,29 @@ public class EmpleadoController {
     }
 
     @GetMapping("/search")
-    public String buscarEmpleados(@RequestParam(required = false) String nombreApellido, Model model) {
+    public String buscarEmpleados(@RequestParam(required = false) String nombreApellido, @RequestParam(required = false) String filtro, Model model) {
 
-        List<Empleado> empleadosBuscados = this.empleadoService.buscarPorNombreYApellido(nombreApellido);
+        List<Empleado> empleadosBuscados;
+
+        switch (filtro) {
+            case "mayor-salario":
+                empleadosBuscados = empleadoService.buscarPorSalarioMayor();
+                break;
+            case "menor-salario":
+                empleadosBuscados = empleadoService.buscarPorSalarioMenor();
+                break;
+            case "Project Manager":
+            case "Team Leader":
+            case "Frontend Developer":
+            case "Backend Developer":
+            case "Full Stack Developer":
+                empleadosBuscados = empleadoService.buscarPorPuesto(filtro);
+                break;
+            default:
+                empleadosBuscados = empleadoService.buscarPorNombreYApellido(nombreApellido);
+                break;
+        }
+
         model.addAttribute("listaDeEmpleados", empleadosBuscados);
         return "verEmpleados";
     }

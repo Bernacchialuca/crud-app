@@ -3,6 +3,7 @@ package com.demo.crudapp.service;
 import com.demo.crudapp.entity.Empleado;
 import com.demo.crudapp.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +48,21 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             }
         }
         return empleadoRepository.findByNombreContainingAndApellidoContaining(nombre, apellido);
+    }
+
+    @Override
+    public List<Empleado> buscarPorPuesto(String filtro) {
+        return empleadoRepository.findByPuesto(filtro);
+    }
+
+    @Override
+    public List<Empleado> buscarPorSalarioMayor() {
+        return empleadoRepository.findAll(Sort.by(Sort.Direction.DESC, "salario"));
+    }
+
+    @Override
+    public List<Empleado> buscarPorSalarioMenor() {
+        return empleadoRepository.findAll(Sort.by(Sort.Direction.ASC, "salario"));
     }
 
 

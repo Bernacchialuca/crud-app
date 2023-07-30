@@ -14,4 +14,10 @@ public interface EmpleadoService {
     void save(Empleado empleado);
     void delete(Long id);
     List<Empleado> buscarPorNombreYApellido(String nombreApellido);
+
+    List<Empleado> buscarPorPuesto(String filtro);
+
+    List<Empleado> buscarPorSalarioMayor();
+
+    List<Empleado> buscarPorSalarioMenor();
 }
