@@ -44,6 +44,7 @@ public class EmpleadoController {
             model.addAttribute("pages", pages);
         }
 
+        model.addAttribute("titulo", "Sistema de gestion de empleados");
         model.addAttribute("listaDeEmpleados", pagePersona.getContent());
         model.addAttribute("prevPage", page);
         model.addAttribute("currentPage", page + 1);

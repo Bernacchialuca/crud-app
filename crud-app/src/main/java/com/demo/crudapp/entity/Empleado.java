@@ -16,33 +16,34 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "El campo nombre no puede estar vacío")
+    @NotEmpty(message = "Por favor, ingresa un nombre")
     private String nombre;
 
-    @NotEmpty(message = "El campo apellido no puede estar vacío")
+    @NotEmpty(message = "Por favor, ingresa un apellido")
     private String apellido;
 
     @NotNull
     @Size(min = 5, max=8, message = "El campo telefono debe tener entre 5 y 8 números")
     private String telefono;
 
-    @NotNull(message = "El campo DNI debe estar lleno")
+    @NotNull(message = "Por favor, ingresa un DNI")
     private Long dni;
 
-    @NotZero(message = "El valor de sexo no puede estar vacío")
+    @NotZero(message = "Por favor, selecciona el sexo")
     private String sexo;
 
-    @NotEmpty(message = "El campo email no puede estar vacío")
-    @Email(message = "Ingresa un formato valido de email")
+    @NotEmpty(message = "Por favor, ingresa un email")
+    @Email(message = "Por favor, ingresa un formato valido de email")
     private String email;
 
-    @NotNull(message = "El campo salario no puede estar vacío")
+    @NotNull(message = "Por favor, ingresa el salario")
     private Integer salario;
 
-    @NotZero(message = "El valor de puesto no puede estar vacío")
+    @NotZero(message = "Por favor, selecciona el puesto")
     private String puesto;
 
     @ManyToOne
+    @NotNull(message = "Por favor, selecciona una ciudad")
     @JoinColumn(name = "id_ciudad")
     private Ciudad ciudad;
 

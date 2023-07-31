@@ -93,6 +93,7 @@
                                 th:text="${ciudad.ciudad}">
                         </option>
                     </select>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"></span>
                 </div>
             </div>
         </div>
