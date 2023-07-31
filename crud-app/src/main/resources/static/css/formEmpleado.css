@@ -4,13 +4,8 @@ background-color: #ffdede;
 border: 1px solid red;
 border-radius: 8px;
 padding: 5px;
-}
-
-.formulario-empleado {
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+margin-top: 20px;
+margin-bottom: 10px
 }
 
 .img-acciones {
@@ -42,9 +37,16 @@ flex-direction:row;
 gap:15px
 }
 
-
-
 .btn:hover {
 transform: scale(1.01);
  background-color: #ff7f50;
+}
+
+input[type="text"],
+ input[type="number"]{
+width:75%
+}
+
+select {
+width:75% !important;
 }

@@ -116,6 +116,7 @@ public class EmpleadoController {
 
         List<Empleado> empleadosBuscados = this.empleadoService.buscarEmpleados(nombreApellido,filtro);
 
+        model.addAttribute("titulo", "Sistema de gestion de empleados");
         model.addAttribute("listaDeEmpleados", empleadosBuscados);
         return "verEmpleados";
     }
