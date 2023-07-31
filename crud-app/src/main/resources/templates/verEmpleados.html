@@ -43,7 +43,8 @@
     <div style="display: inline-block;
 " class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
 
-    <table class="table table-striped" th:if="${not listaDeEmpleados.isEmpty()}">
+    <div th:if="${not listaDeEmpleados.isEmpty()}">
+    <table class="table table-striped" >
         <thead>
         <tr>
             <th scope="col">DNI</th>
@@ -81,11 +82,24 @@
        <div class="col-md8">
            <nav aria-label="Pagination">
                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:each="page : ${pages}">
-                        <a class="page-link" th:href="@{|/empleados/listado?page=${page}|}" th:text="${page}"></a>
-                    </li>
+                   <li class="page-item" th:if="${prevPage > 0}">
+                       <a class="page-link" th:href="@{|/empleados/listado?page=${prevPage}|}">Anterior</a>
+                   </li>
+                   <li class="page-item">
+                       <a class="page-link" th:href="@{|/empleados/listado?page=${prevPage}|}" th:if="${prevPage > 0}" th:text="${prevPage}"></a>
+                   </li>
+                   <li class="page-item">
+                       <a class="page-link" th:href="@{|/empleados/listado?page=${currentPage}|}" th:text="${currentPage}"></a>
+                   </li>
+                   <li class="page-item">
+                       <a class="page-link" th:href="@{|/empleados/listado?page=${nextPage}|}" th:if="${nextPage <= lastPage}" th:text="${nextPage}"></a>
+                   </li>
+                   <li class="page-item" th:if="${nextPage <= lastPage}">
+                       <a class="page-link" th:href="@{|/empleados/listado?page=${nextPage}|}">Siguiente</a>
+                   </li>
                </ul>
            </nav>
+       </div>
        </div>
        <div class="col-md2"></div>
    </div>

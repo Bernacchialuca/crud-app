@@ -44,10 +44,12 @@ public class EmpleadoController {
             model.addAttribute("pages", pages);
         }
 
-        model.addAttribute("prevPage", page);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("nextPage", page);
         model.addAttribute("listaDeEmpleados", pagePersona.getContent());
+        model.addAttribute("prevPage", page);
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("nextPage", page + 2);
+        model.addAttribute("lastPage", totalPage);
+
         return "verEmpleados";
 
     }

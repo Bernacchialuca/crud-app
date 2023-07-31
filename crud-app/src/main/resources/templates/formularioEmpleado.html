@@ -2,7 +2,7 @@
 <html xmlns:th="http://thymeleaf.org">
 <head th:replace="template :: head">
     <meta charset="UTF-8">
-    <link th:href="@{/css/formEmpleado.css}" rel="stylesheet" />
+    <link th:href="@{/css/formEmpleado.css}" rel="stylesheet"/>
 </head>
 <body>
 <header th:replace="template :: header"></header>
@@ -13,70 +13,88 @@
     <form class="formulario-empleado" th:action="@{/empleados/guardar}" th:object="${empleado}" method="post">
 
         <input type="hidden" th:field="*{id}">
-        
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="nombre">Nombre/s</label>
-            <input tabindex="1" th:field="*{nombre}" type="text" class="form-control mb-3" id="nombre"
-                   placeholder="Example: Mark">
-            <span class="errorFormulario" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
-        </div>
 
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="apellido">Apellido/s</label>
-            <input tabindex="2" th:field="*{apellido}" type="text" class="form-control mb-3"
-                   id="apellido"
-                   placeholder="Example: Johnson" >
-            <span class="errorFormulario" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
-        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="nombre">Nombre/s</label>
+                    <input tabindex="1" th:field="*{nombre}" type="text" class="form-control" id="nombre"
+                           placeholder="Ejemplo: Mark">
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+                </div>
 
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="dni">DNI</label>
-            <input tabindex="3" th:field="*{dni}" type="text" class="form-control mb-3"
-                   id="dni"
-                   placeholder="DNI sin puntos..." >
-            <span class="errorFormulario" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span>
-        </div>
+                <div class="mb-3">
+                    <label for="apellido">Apellido/s</label>
+                    <input tabindex="2" th:field="*{apellido}" type="text" class="form-control" id="apellido"
+                           placeholder="Ejemplo: Johnson">
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
+                </div>
 
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="telefono">Tel&eacute;fono</label>
-            <input tabindex="4" th:field="*{telefono}" type="text" class="form-control mb-3"
-                   id="telefono"
-                   placeholder="Example: 12345678" >
-            <span class="errorFormulario" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
-        </div>
+                <div class="mb-3">
+                    <label for="dni">DNI</label>
+                    <input tabindex="3" th:field="*{dni}" type="text" class="form-control" id="dni"
+                           placeholder="DNI sin puntos...">
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span>
+                </div>
 
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="email">Email</label>
-            <input tabindex="5" th:field="*{email}" type="text" class="form-control mb-3" id="email"
-                   placeholder="email@example.com"
-                   >
-            <span class="errorFormulario" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        </div>
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="salario">Salario</label>
-            <input tabindex="6" th:field="*{salario}" type="number" class="form-control mb-3" id="salario"
-                   placeholder="U$D xxx.xxx"
-                   >
-            <span class="errorFormulario" th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}"></span>
-        </div>
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="puesto">Puesto</label>
-            <input tabindex="7" th:field="*{puesto}" type="text" class="form-control mb-3" id="puesto"
-                   placeholder="Full Stack Sr"
-                   >
-            <span class="errorFormulario" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></span>
-        </div>
+                <div class="mb-3">
+                    <label for="telefono">Tel&eacute;fono</label>
+                    <input tabindex="4" th:field="*{telefono}" type="text" class="form-control" id="telefono"
+                           placeholder="Ejemplo: 12345678">
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+                </div>
 
-        <div class="mb-3 col-sm-12 col-md-6">
-            <label for="ciudades">Seleccion&aacute; tu ciudad</label>
-            <select tabindex="8" id="ciudades" class="form-select" aria-label="generaciones"
-                    th:field="*{ciudad}" >
-                <option th:value="0">Seleccion&aacute; tu ciudad...</option>
-                <option th:each="ciudad : ${listaDeCiudades}"
-                        th:value="${ciudad.id}"
-                        th:text="${ciudad.ciudad}">
-                </option>
-            </select>
+                <div class="mb-3">
+                    <label for="email">Email</label>
+                    <input tabindex="5" th:field="*{email}" type="text" class="form-control" id="email"
+                           placeholder="email@example.com">
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="puesto">Puesto</label>
+                    <select tabindex="6" id="puesto" class="form-select" th:field="*{puesto}">
+                        <option th:value="0">Seleccion&aacute; tu puesto...</option>
+                        <option th:value="${'Frontend Developer'}">Frontend Developer</option>
+                        <option th:value="${'Backend Developer'}">Backend Developer</option>
+                        <option th:value="${'Full Stack Developer'}">Full Stack Developer</option>
+                        <option th:value="${'Project Manager'}">Project Manager</option>
+                        <option th:value="${'Team Leader'}">Team Leader</option>
+                    </select>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sexo">Sexo</label>
+                    <select tabindex="7" id="sexo" class="form-select" th:field="*{sexo}">
+                        <option th:value="0">Seleccion&aacute; tu sexo</option>
+                        <option th:value="${'Femenino'}">Femenino</option>
+                        <option th:value="${'Masculino'}">Masculino</option>
+                        <option th:value="${'Otro'}">Otro</option>
+                    </select>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="salario">Salario</label>
+                    <input tabindex="8" th:field="*{salario}" type="number" class="form-control" id="salario"
+                           placeholder="U$D xxx.xxx">
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ciudades">Seleccion&aacute; tu ciudad</label>
+                    <select tabindex="9" id="ciudades" class="form-select" th:field="*{ciudad}">
+                        <option th:value="0">Seleccion&aacute; tu ciudad...</option>
+                        <option th:each="ciudad : ${listaDeCiudades}"
+                                th:value="${ciudad.id}"
+                                th:text="${ciudad.ciudad}">
+                        </option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-dark">Guardar</button>
