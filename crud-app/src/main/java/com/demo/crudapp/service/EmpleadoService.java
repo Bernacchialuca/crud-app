@@ -14,16 +14,15 @@ public interface EmpleadoService {
     Optional<Empleado> getEmpleadoById(Long id);
 
     void save(Empleado empleado);
+
     void delete(Long id);
-    List<Empleado> buscarPorNombreYApellido(String nombreApellido);
 
-    List<Empleado> buscarPorPuesto(String filtro);
+    Page<Empleado> buscarEmpleados(int page, String nombreApellido, String filtro);
 
-    List<Empleado> buscarPorSalarioMayor();
+    Page<Empleado> buscarPorNombreYApellido(String nombreApellido, Pageable pageable);
 
-    List<Empleado> buscarPorSalarioMenor();
-
-    List<Empleado> buscarEmpleados(String nombreApellido, String filtro);
+    Page<Empleado> buscarPorPuesto(String puesto, Pageable pageable);
 
     Page<Empleado> getAll(Pageable pageable);
 }
+

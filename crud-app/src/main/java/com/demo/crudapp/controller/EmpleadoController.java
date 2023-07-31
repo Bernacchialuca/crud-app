@@ -112,12 +112,27 @@ public class EmpleadoController {
     }
 
     @GetMapping("/search")
-    public String buscarEmpleados(@RequestParam(required = false) String nombreApellido, @RequestParam(required = false) String filtro, Model model) {
+    public String buscarEmpleados(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(required = false) String nombreApellido,
+                                  @RequestParam(required = false) String filtro,
+                                  Model model) {
 
-        List<Empleado> empleadosBuscados = this.empleadoService.buscarEmpleados(nombreApellido,filtro);
+        Page<Empleado> pagePersona = empleadoService.buscarEmpleados(page, nombreApellido, filtro);
+
+        int totalPage = pagePersona.getTotalPages();
+
+        if (totalPage > 0) {
+            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
+            model.addAttribute("pages", pages);
+        }
 
         model.addAttribute("titulo", "Sistema de gestion de empleados");
-        model.addAttribute("listaDeEmpleados", empleadosBuscados);
+        model.addAttribute("listaDeEmpleados", pagePersona.getContent());
+        model.addAttribute("prevPage", page);
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("nextPage", page + 2);
+        model.addAttribute("lastPage", totalPage);
+
         return "verEmpleados";
     }
 

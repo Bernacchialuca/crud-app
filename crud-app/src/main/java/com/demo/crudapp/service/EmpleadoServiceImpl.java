@@ -4,8 +4,8 @@ import com.demo.crudapp.entity.Empleado;
 import com.demo.crudapp.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,29 +14,54 @@ import java.util.Optional;
 @Service
 public class EmpleadoServiceImpl implements EmpleadoService {
 
-    @Autowired
-    private EmpleadoRepository empleadoRepository;
+    private final EmpleadoRepository empleadoRepository;
 
-    @Override
-    public List<Empleado> getEmpleados() {
-        return this.empleadoRepository.findAll();
+    @Autowired
+    public EmpleadoServiceImpl(EmpleadoRepository empleadoRepository) {
+        this.empleadoRepository = empleadoRepository;
     }
 
     @Override
-    public Optional<Empleado> getEmpleadoById(Long id) { return this.empleadoRepository.findById(id); }
+    public List<Empleado> getEmpleados() {
+        return empleadoRepository.findAll();
+    }
+
+    @Override
+    public Optional<Empleado> getEmpleadoById(Long id) {
+        return empleadoRepository.findById(id);
+    }
 
     @Override
     public void save(Empleado empleado) {
-        this.empleadoRepository.save(empleado);
+        empleadoRepository.save(empleado);
     }
 
     @Override
     public void delete(Long id) {
-        this.empleadoRepository.deleteById(id);
+        empleadoRepository.deleteById(id);
     }
 
-    public List<Empleado> buscarPorNombreYApellido(String nombreApellido) {
+    @Override
+    public Page<Empleado> buscarEmpleados(int page, String nombreApellido, String filtro) {
+        Pageable pageable = PageRequest.of(page, 10);
+        switch (filtro) {
+            case "mayor-salario":
+                return empleadoRepository.findAllByOrderBySalarioDesc(pageable);
+            case "menor-salario":
+                return empleadoRepository.findAllByOrderBySalarioAsc(pageable);
+            case "Project Manager":
+            case "Team Leader":
+            case "Frontend Developer":
+            case "Backend Developer":
+            case "Full Stack Developer":
+                return buscarPorPuesto(filtro, pageable);
+            default:
+                return buscarPorNombreYApellido(nombreApellido, pageable);
+        }
+    }
 
+    @Override
+    public Page<Empleado> buscarPorNombreYApellido(String nombreApellido, Pageable pageable) {
         String nombre = "";
         String apellido = "";
 
@@ -49,46 +74,16 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 }
             }
         }
-        return empleadoRepository.findByNombreContainingAndApellidoContaining(nombre, apellido);
+        return empleadoRepository.findByNombreContainingAndApellidoContaining(nombre, apellido,pageable);
     }
 
     @Override
-    public List<Empleado> buscarPorPuesto(String filtro) {
-        return empleadoRepository.findByPuesto(filtro);
-    }
-
-    @Override
-    public List<Empleado> buscarPorSalarioMayor() {
-        return empleadoRepository.findAll(Sort.by(Sort.Direction.DESC, "salario"));
-    }
-
-    @Override
-    public List<Empleado> buscarPorSalarioMenor() {
-        return empleadoRepository.findAll(Sort.by(Sort.Direction.ASC, "salario"));
-    }
-
-    @Override
-    public List<Empleado> buscarEmpleados(String nombreApellido, String filtro) {
-        switch (filtro) {
-            case "mayor-salario":
-                return buscarPorSalarioMayor();
-            case "menor-salario":
-                return buscarPorSalarioMenor();
-            case "Project Manager":
-            case "Team Leader":
-            case "Frontend Developer":
-            case "Backend Developer":
-            case "Full Stack Developer":
-                return buscarPorPuesto(filtro);
-            default:
-                return buscarPorNombreYApellido(nombreApellido);
-        }
+    public Page<Empleado> buscarPorPuesto(String puesto, Pageable pageable) {
+        return empleadoRepository.findByPuesto(puesto, pageable);
     }
 
     @Override
     public Page<Empleado> getAll(Pageable pageable) {
         return this.empleadoRepository.findAll(pageable);
     }
-
-
 }
