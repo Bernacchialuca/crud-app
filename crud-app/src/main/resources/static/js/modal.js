@@ -1,26 +1,29 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const showModal = (employeeName, employeeLastName, url) => {
-    const deleteModal = document.getElementById('deleteModal');
-    deleteModal.style.display = 'block';
-    document.getElementById('employeeName').textContent = employeeName;
-    document.getElementById('employeeLastName').textContent = employeeLastName;
+// Function to show the modal
+function showModal(employeeName, employeeLastName, url) {
+  const deleteModal = document.getElementById('deleteModal');
+  deleteModal.style.display = 'block';
 
-    const acceptButton = deleteModal.querySelector('#acceptButton');
-    const cancelButton = deleteModal.querySelector('#cancelButton');
-    const xButton = deleteModal.querySelector('#xButton');
+  document.getElementById('employeeName').textContent = employeeName;
+  document.getElementById('employeeLastName').textContent = employeeLastName;
 
-    acceptButton.addEventListener('click', () => {
-      window.location.href = url;
-    });
+  const acceptButton = deleteModal.querySelector('#acceptButton');
+  const cancelButton = deleteModal.querySelector('#cancelButton');
+  const xButton = deleteModal.querySelector('#xButton');
 
-    const closeModal = () => {
-      deleteModal.style.display = 'none';
-    };
+  acceptButton.addEventListener('click', () => {
+    window.location.href = url;
+  });
 
-    cancelButton.addEventListener('click', closeModal);
-    xButton.addEventListener('click', closeModal);
-  };
+  function closeModal() {
+    deleteModal.style.display = 'none';
+  }
 
+  cancelButton.addEventListener('click', closeModal);
+  xButton.addEventListener('click', closeModal);
+}
+
+// Function to attach event listeners to delete buttons
+function attachDeleteButtonListeners() {
   const deleteButtons = document.querySelectorAll('a[name="deleteButton"]');
   deleteButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -31,6 +34,31 @@ document.addEventListener('DOMContentLoaded', () => {
       showModal(employeeName, employeeLastName, url);
     });
   });
+}
+
+// Function to hide successDiv after 3 seconds
+function ocultarSuccessDiv() {
+  const successDiv = document.getElementById('successDiv');
+  if (successDiv.style.display !== 'none') {
+    setTimeout(function() {
+      successDiv.style.display = 'none';
+    }, 3000); // 3000 milisegundos = 3 segundos
+  }
+}
+
+// Function to hide eliminadoDiv after 3 seconds
+function ocultarEliminadoDiv() {
+  const eliminadoDiv = document.getElementById('eliminadoDiv');
+  if (eliminadoDiv.style.display !== 'none') {
+    setTimeout(function() {
+      eliminadoDiv.style.display = 'none';
+    }, 3000); // 3000 milisegundos = 3 segundos
+  }
+}
+
+// DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+  attachDeleteButtonListeners();
 
   const deleteModal = document.getElementById('deleteModal');
   deleteModal.addEventListener('click', (event) => {
@@ -38,26 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteModal.style.display = 'none';
     }
   });
+
+  ocultarSuccessDiv();
+  ocultarEliminadoDiv();
 });
-
- function ocultarSuccessDiv() {
-    const successDiv = document.getElementById('successDiv');
-    if (successDiv.style.display !== 'none') {
-      setTimeout(function() {
-        successDiv.style.display = 'none';
-      }, 3000); // 3000 milisegundos = 3 segundos
-    }
-  }
-
-   function ocultarEliminadoDiv() {
-      const eliminadoDiv = document.getElementById('eliminadoDiv');
-      if (eliminadoDiv.style.display !== 'none') {
-        setTimeout(function() {
-          eliminadoDiv.style.display = 'none';
-        }, 3000); // 3000 milisegundos = 3 segundos
-      }
-    }
-
-  // Llama a la función para que comience a contar el tiempo cuando se cargue la página
-  document.addEventListener('DOMContentLoaded', ocultarSuccessDiv);
-  document.addEventListener('DOMContentLoaded', ocultarEliminadoDiv);
