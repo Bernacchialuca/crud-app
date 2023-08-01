@@ -38,8 +38,7 @@
     <br><br>
 
     <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${success}" th:text="${success}" id="successDiv"></div>
-    <div style="display: inline-block" class="alert alert-success" role="alert" th:if="${eliminado}" th:text="${eliminado}" id="deleteAlert"></div>
-
+    <div class="alert alert-success" role="alert" id="deleteAlert" th:if="${eliminado}" th:text="${eliminado}" style="display: inline-block"></div>
 
     <div style="display: inline-block;
 " class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
@@ -128,9 +127,8 @@
 </div>
 
 <footer th:replace="template :: footer"></footer>
-<script th:src="@{/js/deleteAlert.js}"></script>
 <script th:src="@{/js/modal.js}"></script>
-
+<script th:src="@{/js/deleteAlert.js}"></script>
 </body>
 
 </html>
