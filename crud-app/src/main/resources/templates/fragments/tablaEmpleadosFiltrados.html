@@ -1,4 +1,7 @@
-<table class="table table-striped">
+<div style="display: inline-block;
+" class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
+
+<table th:if="${not listaDeEmpleados.isEmpty()}" class="table table-striped">
     <thead>
     <tr>
         <th scope="col">DNI</th>
@@ -31,4 +34,6 @@
     </tr>
     </tbody>
 </table>
+
+
 

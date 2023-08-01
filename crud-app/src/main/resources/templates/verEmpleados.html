@@ -17,11 +17,12 @@
             <a th:href="@{/empleados/crear}" class="btn btn-dark">Agregar empleado</a>
             <div class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Nombre y Apellido..." aria-label="Search" name="nombreApellido">
-                <button type="submit" class="btn btn-dark">Buscar</button>
+                <button id="buscarButton" class="btn btn-dark">Buscar</button>
             </div>
         </div>
         <div class="section-search">
-            <select class="form-select" name="filtro">
+            <div>Filtros</div>
+            <select class="form-select" name="filtro" id="filtroSelect">
                 <option value="">Filtros ⇅ </option>
                 <option value="menor-salario">Salario: Menor a mayor</option>
                 <option value="mayor-salario">Salario: Mayor a menor</option>
@@ -31,8 +32,6 @@
                 <option value="Backend Developer">Puesto: Backend Developer</option>
                 <option value="Full Stack Developer">Puesto: Full Stack Developer</option>
             </select>
-
-            <button class="btn btn-dark">Filtrar</button>
         </div>
     </form>
     <br><br>
@@ -43,7 +42,7 @@
     <div style="display: inline-block;
 " class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
 
-    <div listaDeEmpleadosContainer th:if="${not listaDeEmpleados.isEmpty()}">
+    <div th:if="${not listaDeEmpleados.isEmpty()}">
         <div id="listaDeEmpleadosContainer">
     <table class="table table-striped" >
         <thead>
@@ -130,36 +129,7 @@
 
 <footer th:replace="template :: footer"></footer>
 <script th:src="@{/js/modal.js}"></script>
+<script th:src="@{/js/ajax.js}"></script>
 <script th:src="@{/js/deleteAlert.js}"></script>
-<script>
-    $(document).ready(function () {
-        // Escucha el evento de envío del formulario para filtrar empleados.
-        $("#filtroEmpleadosForm").on("submit", function (event) {
-            event.preventDefault(); // Evita el envío normal del formulario.
-
-            // Obtén los datos del formulario.
-            const formData = $(this).serialize();
-
-            // Realiza una solicitud AJAX para filtrar empleados.
-            $.ajax({
-                url: "/empleados/search",
-                type: "GET",
-                data: formData,
-                success: function (response) {
-                console.log(response)
-                    // Actualiza el contenido de la lista de empleados en la página con la respuesta AJAX.
-                    $("#listaDeEmpleadosContainer").html(response);
-                },
-                error: function (xhr, status, error) {
-                    // Manejar el error si es necesario.
-                    console.error(error);
-                }
-            });
-        });
-    });
-</script>
-
 </body>
-
-
 </html>
