@@ -133,7 +133,7 @@ public class EmpleadoController {
         model.addAttribute("nextPage", page + 2);
         model.addAttribute("lastPage", totalPage);
 
-        return "verEmpleados";
+        return "fragments/tablaEmpleadosFiltrados";
     }
 
 }

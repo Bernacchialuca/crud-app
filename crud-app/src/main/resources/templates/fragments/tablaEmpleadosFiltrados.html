@@ -1,0 +1,34 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">DNI</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Tel&eacute;fono</th>
+        <th scope="col">Email</th>
+        <th scope="col">Salario</th>
+        <th scope="col">Puesto</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="empleados : ${listaDeEmpleados}">
+        <td th:text="${empleados.dni}"></td>
+        <td th:text="${empleados.nombre}" class="employee-name"></td>
+        <td th:text="${empleados.apellido}" class="employee-name"></td>
+        <td th:text="${empleados.telefono}"></td>
+        <td th:text="${empleados.email}"></td>
+        <td th:text="${'U$D ' + empleados.salario}"></td>
+        <td th:text="${empleados.puesto}"></td>
+        <td th:text="${empleados.ciudad?.ciudad}"></td>
+        <td>
+            <a th:href="@{'/empleados/editar/' + ${empleados.id}}"><img class="img-acciones"
+                                                                        th:src="@{/svg/edit-square-icon.svg}"></a>
+            <a th:href="@{'/empleados/eliminar/' + ${empleados.id}}" name="deleteButton"><img class="img-acciones"
+                                                                                              th:src="@{/svg/close-square-icon.svg}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+

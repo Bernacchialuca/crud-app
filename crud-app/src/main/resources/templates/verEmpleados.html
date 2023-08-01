@@ -12,7 +12,7 @@
     <br><br>
     <h1 th:text="${titulo}"></h1>
     <br><br>
-    <form class="container-header-table" th:action="@{/empleados/search}" method="get">
+    <form class="container-header-table" id="filtroEmpleadosForm" method="get">
         <div class="section-search">
             <a th:href="@{/empleados/crear}" class="btn btn-dark">Agregar empleado</a>
             <div class="d-flex" role="search">
@@ -43,7 +43,8 @@
     <div style="display: inline-block;
 " class="alert alert-warning" role="alert" th:if="${listaDeEmpleados.isEmpty()}">Oops! No se encontraron empleados 😢</div>
 
-    <div th:if="${not listaDeEmpleados.isEmpty()}">
+    <div listaDeEmpleadosContainer th:if="${not listaDeEmpleados.isEmpty()}">
+        <div id="listaDeEmpleadosContainer">
     <table class="table table-striped" >
         <thead>
         <tr>
@@ -77,6 +78,7 @@
         </tr>
         </tbody>
     </table>
+        </div>
    <div class="row">
        <div class="col-md2"></div>
        <div class="col-md8">
@@ -129,6 +131,35 @@
 <footer th:replace="template :: footer"></footer>
 <script th:src="@{/js/modal.js}"></script>
 <script th:src="@{/js/deleteAlert.js}"></script>
+<script>
+    $(document).ready(function () {
+        // Escucha el evento de envío del formulario para filtrar empleados.
+        $("#filtroEmpleadosForm").on("submit", function (event) {
+            event.preventDefault(); // Evita el envío normal del formulario.
+
+            // Obtén los datos del formulario.
+            const formData = $(this).serialize();
+
+            // Realiza una solicitud AJAX para filtrar empleados.
+            $.ajax({
+                url: "/empleados/search",
+                type: "GET",
+                data: formData,
+                success: function (response) {
+                console.log(response)
+                    // Actualiza el contenido de la lista de empleados en la página con la respuesta AJAX.
+                    $("#listaDeEmpleadosContainer").html(response);
+                },
+                error: function (xhr, status, error) {
+                    // Manejar el error si es necesario.
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
 </body>
+
 
 </html>
