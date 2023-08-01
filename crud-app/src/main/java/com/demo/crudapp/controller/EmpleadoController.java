@@ -8,12 +8,14 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -112,28 +114,22 @@ public class EmpleadoController {
     }
 
     @GetMapping("/search")
-    public String buscarEmpleados(@RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(required = false) String nombreApellido,
-                                  @RequestParam(required = false) String filtro,
-                                  Model model) {
-
+    public @ResponseBody ResponseEntity<Map<String, Object>> buscarEmpleados(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) String nombreApellido,
+            @RequestParam(required = false) String filtro
+    ) {
         Page<Empleado> pagePersona = empleadoService.buscarEmpleados(page, nombreApellido, filtro);
-
         int totalPage = pagePersona.getTotalPages();
 
-        if (totalPage > 0) {
-            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
-            model.addAttribute("pages", pages);
-        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("empleados", pagePersona.getContent());
+        response.put("totalPages", totalPage);
 
-        model.addAttribute("titulo", "Sistema de gestion de empleados");
-        model.addAttribute("listaDeEmpleados", pagePersona.getContent());
-        model.addAttribute("prevPage", page);
-        model.addAttribute("currentPage", page + 1);
-        model.addAttribute("nextPage", page + 2);
-        model.addAttribute("lastPage", totalPage);
-
-        return "verEmpleados";
+        return ResponseEntity.ok(response);
     }
+
+
+
 
 }

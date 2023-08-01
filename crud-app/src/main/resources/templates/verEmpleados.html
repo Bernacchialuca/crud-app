@@ -129,6 +129,41 @@
 <footer th:replace="template :: footer"></footer>
 <script th:src="@{/js/modal.js}"></script>
 <script th:src="@{/js/deleteAlert.js}"></script>
+<script>
+    $(document).ready(function () {
+        const tableContainer = $("#tableContainer");
+        const searchForm = $("#searchForm");
+
+        searchForm.on("submit", function (event) {
+            event.preventDefault();
+            searchEmpleados();
+        });
+
+        function searchEmpleados() {
+            const formData = searchForm.serialize();
+            $.ajax({
+                type: "GET",
+                url: "/empleados/search", // Corrected the endpoint URL
+                data: formData,
+                dataType: "html",
+                success: function (htmlResponse) {
+                    tableContainer.html(htmlResponse);
+                },
+                error: function (error) {
+                    console.log("Error al realizar la búsqueda: " + error);
+                }
+            });
+        }
+
+        $(document).on("click", ".pagination .page-link", function (event) {
+            event.preventDefault();
+            const page = $(this).data("page");
+            $("#page").val(page);
+            searchEmpleados();
+        });
+    });
+</script>
+
 </body>
 
 </html>
