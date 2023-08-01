@@ -73,15 +73,15 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="sexo">Sexo</label>
-                    <select tabindex="7" id="sexo" class="form-select" th:field="*{sexo}">
-                        <option th:value="0">Seleccion&aacute; tu sexo</option>
+                    <label for="genero">Sexo</label>
+                    <select tabindex="7" id="genero" class="form-select" th:field="*{genero}">
+                        <option th:value="0">Seleccion&aacute; tu genero</option>
                         <option th:value="${'Femenino'}">Femenino</option>
                         <option th:value="${'Masculino'}">Masculino</option>
                         <option th:value="${'Otro'}">Otro</option>
                     </select>
                     <br>
-                    <span class="errorFormulario" th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}"></span>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"></span>
                 </div>
 
                 <div class="mb-3">

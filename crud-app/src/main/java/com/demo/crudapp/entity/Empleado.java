@@ -30,7 +30,7 @@ public class Empleado {
     private Long dni;
 
     @NotZero(message = "Por favor, selecciona el sexo")
-    private String sexo;
+    private String genero;
 
     @NotEmpty(message = "Por favor, ingresa un email")
     @Email(message = "Por favor, ingresa un formato valido de email")

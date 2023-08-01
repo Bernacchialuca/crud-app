@@ -86,4 +86,33 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     public Page<Empleado> getAll(Pageable pageable) {
         return this.empleadoRepository.findAll(pageable);
     }
+
+    @Override
+    public Long countByPuesto(String puesto) {
+        return this.empleadoRepository.countByPuesto(puesto);
+    }
+    @Override
+    public Long countEmpleadosPorCiudad(String nombreCiudad) {
+        return this.empleadoRepository.countEmpleadosPorCiudad(nombreCiudad);
+    }
+
+    @Override
+    public Long countEmpleadosPorGenero(String genero) {
+        return this.empleadoRepository.countByGenero(genero);
+    }
+
+    @Override
+    public Long countBySalarioLessThan(int salario) {
+        return this.empleadoRepository.countBySalarioLessThan(salario);
+    }
+
+    @Override
+    public Long countBySalarioGreaterThan(int salario) {
+        return this.empleadoRepository.countBySalarioGreaterThan(salario);
+    }
+
+    @Override
+    public Long countBySalarioBetween(int minSalario, int maxSalario) {
+        return this.empleadoRepository.countBySalarioBetween(minSalario,maxSalario);
+    }
 }

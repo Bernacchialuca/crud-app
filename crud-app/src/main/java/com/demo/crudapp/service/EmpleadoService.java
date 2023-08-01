@@ -24,5 +24,15 @@ public interface EmpleadoService {
     Page<Empleado> buscarPorPuesto(String puesto, Pageable pageable);
 
     Page<Empleado> getAll(Pageable pageable);
+
+    Long countByPuesto(String puesto);
+
+    Long countEmpleadosPorCiudad(String nombreCiudad);
+
+    Long countEmpleadosPorGenero(String genero);
+
+    Long countBySalarioLessThan(int salario);
+    Long countBySalarioGreaterThan(int salario);
+    Long countBySalarioBetween(int minSalario, int maxSalario);
 }
 
