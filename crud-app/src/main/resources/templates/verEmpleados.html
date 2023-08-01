@@ -80,7 +80,7 @@
         </div>
    <div class="row">
        <div class="col-md2"></div>
-       <div class="col-md8">
+       <div id="paginationContainer" class="col-md8">
            <nav aria-label="Pagination">
                <ul class="pagination justify-content-center">
                    <li class="page-item" th:if="${prevPage > 0}">
@@ -129,7 +129,8 @@
 
 <footer th:replace="template :: footer"></footer>
 <script th:src="@{/js/modal.js}"></script>
-<script th:src="@{/js/ajax.js}"></script>
+<script th:src="@{/js/ajaxSearch.js}"></script>
+<script th:src="@{/js/ajaxPagination.js}"></script>
 <script th:src="@{/js/deleteAlert.js}"></script>
 </body>
 </html>

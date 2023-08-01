@@ -6,7 +6,6 @@ function performAjaxRequest(formData) {
     data: formData,
     success: function (response) {
       $("#listaDeEmpleadosContainer").html(response);
-      // Reattach event listeners to delete buttons after updating content
       attachDeleteButtonListeners();
     },
     error: function (xhr, status, error) {
@@ -16,9 +15,7 @@ function performAjaxRequest(formData) {
 }
 
 $(document).ready(function () {
-  // Escucha el evento "change" en el select para filtrar empleados.
   $("#filtroSelect").on("change", function () {
-    // Obtén los datos del formulario.
     const formData = $("#filtroEmpleadosForm").serialize();
     performAjaxRequest(formData);
   });

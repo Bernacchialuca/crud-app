@@ -1,4 +1,3 @@
-// Function to show the modal
 function showModal(employeeName, employeeLastName, url) {
   const deleteModal = document.getElementById('deleteModal');
   deleteModal.style.display = 'block';
@@ -22,7 +21,6 @@ function showModal(employeeName, employeeLastName, url) {
   xButton.addEventListener('click', closeModal);
 }
 
-// Function to attach event listeners to delete buttons
 function attachDeleteButtonListeners() {
   const deleteButtons = document.querySelectorAll('a[name="deleteButton"]');
   deleteButtons.forEach((button) => {
@@ -36,27 +34,6 @@ function attachDeleteButtonListeners() {
   });
 }
 
-// Function to hide successDiv after 3 seconds
-function ocultarSuccessDiv() {
-  const successDiv = document.getElementById('successDiv');
-  if (successDiv.style.display !== 'none') {
-    setTimeout(function() {
-      successDiv.style.display = 'none';
-    }, 3000); // 3000 milisegundos = 3 segundos
-  }
-}
-
-// Function to hide eliminadoDiv after 3 seconds
-function ocultarEliminadoDiv() {
-  const eliminadoDiv = document.getElementById('eliminadoDiv');
-  if (eliminadoDiv.style.display !== 'none') {
-    setTimeout(function() {
-      eliminadoDiv.style.display = 'none';
-    }, 3000); // 3000 milisegundos = 3 segundos
-  }
-}
-
-// DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
   attachDeleteButtonListeners();
 
@@ -66,7 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteModal.style.display = 'none';
     }
   });
-
-  ocultarSuccessDiv();
-  ocultarEliminadoDiv();
 });
