@@ -21,9 +21,8 @@
             </div>
         </div>
         <div class="section-search">
-            <div>Filtros</div>
             <select class="form-select" name="filtro" id="filtroSelect">
-                <option value="">Filtros ⇅ </option>
+                <option value="">Filtrar ⇅ </option>
                 <option value="menor-salario">Salario: Menor a mayor</option>
                 <option value="mayor-salario">Salario: Mayor a menor</option>
                 <option value="Project Manager">Puesto: Project Manager</option>
@@ -79,7 +78,7 @@
     </table>
         </div>
    <div class="row">
-       <div class="col-md2"></div>
+       <div class="col-md2"> <a class="btn btn-outline-danger" th:href="@{/empleados/export/pdf}" target="_blank" role="button">Exportar a PDF</a> </div>
        <div id="paginationContainer" class="col-md8">
            <nav aria-label="Pagination">
                <ul class="pagination justify-content-center">

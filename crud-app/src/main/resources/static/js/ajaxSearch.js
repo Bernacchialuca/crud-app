@@ -1,4 +1,3 @@
-// Function to perform the AJAX request and update the content
 function performAjaxRequest(formData) {
   $.ajax({
     url: "/empleados/search",
