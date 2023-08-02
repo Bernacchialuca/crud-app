@@ -1,7 +1,7 @@
 package com.demo.crudapp.service;
 
 import com.demo.crudapp.entity.Empleado;
-import com.demo.crudapp.repository.EmpleadoRepository;
+import com.demo.crudapp.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,33 +12,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmpleadoServiceImpl implements EmpleadoService {
+public class AdminServiceImpl implements AdminService {
 
-    private final EmpleadoRepository empleadoRepository;
+    private final AdminRepository adminRepository;
 
     @Autowired
-    public EmpleadoServiceImpl(EmpleadoRepository empleadoRepository) {
-        this.empleadoRepository = empleadoRepository;
+    public AdminServiceImpl(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
     }
 
     @Override
     public List<Empleado> getEmpleados() {
-        return empleadoRepository.findAll();
+        return adminRepository.findAll();
     }
 
     @Override
     public Optional<Empleado> getEmpleadoById(Long id) {
-        return empleadoRepository.findById(id);
+        return adminRepository.findById(id);
     }
 
     @Override
     public void save(Empleado empleado) {
-        empleadoRepository.save(empleado);
+        adminRepository.save(empleado);
     }
 
     @Override
     public void delete(Long id) {
-        empleadoRepository.deleteById(id);
+        adminRepository.deleteById(id);
     }
 
     @Override
@@ -46,9 +46,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         Pageable pageable = PageRequest.of(page, 10);
         switch (filtro) {
             case "mayor-salario":
-                return empleadoRepository.findAllByOrderBySalarioDesc(pageable);
+                return adminRepository.findAllByOrderBySalarioDesc(pageable);
             case "menor-salario":
-                return empleadoRepository.findAllByOrderBySalarioAsc(pageable);
+                return adminRepository.findAllByOrderBySalarioAsc(pageable);
             case "Project Manager":
             case "Team Leader":
             case "Frontend Developer":
@@ -74,45 +74,45 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 }
             }
         }
-        return empleadoRepository.findByNombreContainingAndApellidoContaining(nombre, apellido,pageable);
+        return adminRepository.findByNombreContainingAndApellidoContaining(nombre, apellido,pageable);
     }
 
     @Override
     public Page<Empleado> buscarPorPuesto(String puesto, Pageable pageable) {
-        return empleadoRepository.findByPuesto(puesto, pageable);
+        return adminRepository.findByPuesto(puesto, pageable);
     }
 
     @Override
     public Page<Empleado> getAll(Pageable pageable) {
-        return this.empleadoRepository.findAll(pageable);
+        return this.adminRepository.findAll(pageable);
     }
 
     @Override
     public Long countByPuesto(String puesto) {
-        return this.empleadoRepository.countByPuesto(puesto);
+        return this.adminRepository.countByPuesto(puesto);
     }
     @Override
     public Long countEmpleadosPorCiudad(String nombreCiudad) {
-        return this.empleadoRepository.countEmpleadosPorCiudad(nombreCiudad);
+        return this.adminRepository.countEmpleadosPorCiudad(nombreCiudad);
     }
 
     @Override
     public Long countEmpleadosPorGenero(String genero) {
-        return this.empleadoRepository.countByGenero(genero);
+        return this.adminRepository.countByGenero(genero);
     }
 
     @Override
     public Long countBySalarioLessThan(int salario) {
-        return this.empleadoRepository.countBySalarioLessThan(salario);
+        return this.adminRepository.countBySalarioLessThan(salario);
     }
 
     @Override
     public Long countBySalarioGreaterThan(int salario) {
-        return this.empleadoRepository.countBySalarioGreaterThan(salario);
+        return this.adminRepository.countBySalarioGreaterThan(salario);
     }
 
     @Override
     public Long countBySalarioBetween(int minSalario, int maxSalario) {
-        return this.empleadoRepository.countBySalarioBetween(minSalario,maxSalario);
+        return this.adminRepository.countBySalarioBetween(minSalario,maxSalario);
     }
 }

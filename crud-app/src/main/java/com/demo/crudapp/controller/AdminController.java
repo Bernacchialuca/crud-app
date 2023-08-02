@@ -3,8 +3,7 @@ package com.demo.crudapp.controller;
 import com.demo.crudapp.entity.Ciudad;
 import com.demo.crudapp.entity.Empleado;
 import com.demo.crudapp.service.CiudadService;
-import com.demo.crudapp.service.EmpleadoService;
-import com.itextpdf.text.BaseColor;
+import com.demo.crudapp.service.AdminService;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
@@ -31,10 +30,10 @@ import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/empleados")
-public class EmpleadoController {
+public class AdminController {
 
     @Autowired
-    private EmpleadoService empleadoService;
+    private AdminService adminService;
     @Autowired
     private CiudadService ciudadService;
 
@@ -44,7 +43,7 @@ public class EmpleadoController {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
 
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Page<Empleado> pagePersona = this.empleadoService.getAll(pageRequest);
+        Page<Empleado> pagePersona = this.adminService.getAll(pageRequest);
 
         int totalPage = pagePersona.getTotalPages();
 
@@ -90,7 +89,7 @@ public class EmpleadoController {
         String mensaje = "El empleado " + empleado.getNombre() + " " + empleado.getApellido() +  " fue " + action + " correctamente";
         redirectAttributes.addFlashAttribute("success", mensaje);
 
-        this.empleadoService.save(empleado);
+        this.adminService.save(empleado);
         return "redirect:/empleados/listado";
     }
 
@@ -98,8 +97,8 @@ public class EmpleadoController {
     @GetMapping("/eliminar/{id}")
     public String eliminarEmpleado(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
-        Optional<Empleado> empleado = this.empleadoService.getEmpleadoById(id);
-        this.empleadoService.delete(id);
+        Optional<Empleado> empleado = this.adminService.getEmpleadoById(id);
+        this.adminService.delete(id);
         String mensaje = "El empleado " + empleado.get().getNombre() + " " + empleado.get().getApellido() + " fue eliminado correctamente";
 
         redirectAttributes.addFlashAttribute("eliminado", mensaje);
@@ -109,7 +108,7 @@ public class EmpleadoController {
     @GetMapping("/editar/{id}")
     public String editarempleado(@PathVariable("id") Long idEmpleado, Model model) {
 
-        Optional<Empleado> empleado = this.empleadoService.getEmpleadoById(idEmpleado);
+        Optional<Empleado> empleado = this.adminService.getEmpleadoById(idEmpleado);
         List<Ciudad> listaDeCiudades = this.ciudadService.getCiudades();
 
         model.addAttribute("titulo", "Editar Empleado");
@@ -120,13 +119,21 @@ public class EmpleadoController {
 
     }
 
+    @GetMapping("/task/{id}")
+    public String asignarTarea(@PathVariable("id") Long idEmpleado, Model model) {
+        Optional<Empleado> empleado = this.adminService.getEmpleadoById(idEmpleado);
+        model.addAttribute("titulo", "Asignar Tareas");
+        model.addAttribute("empleado",empleado);
+        return "asignarTarea";
+    }
+
     @GetMapping("/search")
     public String buscarEmpleados(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(required = false) String nombreApellido,
                                   @RequestParam(required = false) String filtro,
                                   Model model) {
 
-        Page<Empleado> pagePersona = empleadoService.buscarEmpleados(page, nombreApellido, filtro);
+        Page<Empleado> pagePersona = adminService.buscarEmpleados(page, nombreApellido, filtro);
 
         int totalPage = pagePersona.getTotalPages();
 
@@ -148,7 +155,7 @@ public class EmpleadoController {
     @GetMapping("/export/pdf")
     public void exportToPDF(HttpServletResponse response) throws IOException, DocumentException {
         // Retrieve all employees from the service
-        List<Empleado> allEmpleados = empleadoService.getEmpleados(); // Assuming you have a method like this in the service
+        List<Empleado> allEmpleados = adminService.getEmpleados(); // Assuming you have a method like this in the service
 
         // Set the response content type
         response.setContentType("application/pdf");

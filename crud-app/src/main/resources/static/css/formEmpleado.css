@@ -8,15 +8,26 @@ margin-top: 20px;
 margin-bottom: 10px
 }
 
-.img-acciones {
+.img-acciones{
+text-align:center;
 width: 35px;
 height: 35px;
 margin-right:5px;
 transition: border-radius 0.4s ease-in-out;
 }
 
-.img-acciones:hover {
+.img-acciones:hover{
  border-radius:50%;
+}
+
+.img-task {
+width: 40px;
+height:40px
+}
+
+.img-task:hover {
+border-radius: 50%;
+background: #ccc
 }
 
 .container-header-table {
@@ -28,6 +39,7 @@ justify-content: space-between;
 .section-search {
 display:flex;
 flex-direction:row;
+justify-content:end;
 gap:30px
 }
 
@@ -45,6 +57,10 @@ transform: scale(1.01);
 input[type="text"],
  input[type="number"]{
 width:75%
+}
+
+#filtroSelect {
+width: 100% !important
 }
 
 select {

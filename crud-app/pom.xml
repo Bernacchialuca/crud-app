@@ -81,10 +81,6 @@
 			<version>2.9.4</version>
 		</dependency>
 	</dependencies>
-	<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-	</dependency>
 
 	<build>
 		<plugins>

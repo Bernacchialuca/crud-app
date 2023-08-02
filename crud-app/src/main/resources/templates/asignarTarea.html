@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="template :: head">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<header th:replace="template :: header"></header>
+<br><br>
+<div class="container">
+    <h2 th:text="${titulo}"></h2>
+    <br><br>
+</div>
+<footer th:replace="template :: footer"></footer>
+</body>
+</html>
