@@ -2,15 +2,72 @@
 <html xmlns:th="http://thymeleaf.org">
 <head th:replace="template :: head">
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Asignar Tarea</title>
+    <link th:href="@{/css/formEmpleado.css}" rel="stylesheet"/>
 </head>
 <body>
 <header th:replace="template :: header"></header>
 <br><br>
 <div class="container">
-    <h2 th:text="${titulo}"></h2>
+    <h2>Asignar Tarea</h2>
+    <br>
+    <div class="accordion" id="infoEmpleadoAccordion" style="max-width: 400px;">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="infoEmpleadoHeading">
+                <button style="background-color: white; color: black;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#infoEmpleadoCollapse" aria-expanded="false" aria-controls="infoEmpleadoCollapse">
+                    Empleado:&nbsp;&nbsp;<span th:text="${empleado.nombre + ' ' + empleado.apellido}"></span>
+                </button>
+            </h2>
+            <div id="infoEmpleadoCollapse" class="accordion-collapse collapse" aria-labelledby="infoEmpleadoHeading" data-bs-parent="#infoEmpleadoAccordion">
+                <div class="accordion-body">
+                    <div style="display:flex; flex-direction:column">
+                        <strong>DNI:</strong> <span th:text="${empleado.dni}"></span>
+                        <strong>Email:</strong> <span th:text="${empleado.email}"></span>
+                        <strong>Puesto:</strong> <span th:text="${empleado.puesto}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <br><br>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <form th:action="@{|/admin/task/asignar|}" th:object="${tarea}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{empleado.id}">
+                <div class="mb-2">
+                    <label for="descripcion">Descripcion</label>
+                    <input tabindex="1" th:field="*{descripcion}" type="text" class="form-control input-short" id="descripcion"
+                           placeholder="Describe la tarea...">
+                    <br>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></span>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="fechaLimite">Fecha de limite</label>
+                    <input style="width: 75%" class="form-control" id="fechaLimite" type="date" th:field="*{fechaLimite}"/>
+                    <br>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('fechaLimite')}" th:errors="*{fechaLimite}"></span>
+                </div>
+                <div class="mb-2">
+                    <label for="prioridad">Prioridad</label>
+                    <select tabindex="7" id="prioridad" class="form-select" th:field="*{prioridad}">
+                        <option th:value="0">Seleccion&aacute; la prioridad</option>
+                        <option th:value="${'Alta'}">Alta</option>
+                        <option th:value="${'Media'}">Media</option>
+                        <option th:value="${'Baja'}">Baja</option>
+                    </select>
+                    <br>
+                    <span class="errorFormulario" th:if="${#fields.hasErrors('prioridad')}" th:errors="*{prioridad}"></span>
+                </div>
+                <br th:if="${#fields.hasErrors('prioridad')}">
+                <input tabindex="1" th:field="*{completada}" type="hidden" th:value="false">
+                <button class="btn btn-dark" type="submit">Asignar tarea</button>
+            </form>
+        </div>
+    </div>
 </div>
 <footer th:replace="template :: footer"></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script
 </body>
 </html>

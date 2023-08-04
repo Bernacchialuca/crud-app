@@ -11,7 +11,7 @@ public interface AdminService {
 
     List<Empleado> getEmpleados();
 
-    Optional<Empleado> getEmpleadoById(Long id);
+    Optional<Empleado> findByIdOptional(Long id);
 
     void save(Empleado empleado);
 
@@ -34,5 +34,7 @@ public interface AdminService {
     Long countBySalarioLessThan(int salario);
     Long countBySalarioGreaterThan(int salario);
     Long countBySalarioBetween(int minSalario, int maxSalario);
+
+    Empleado getEmpleadoById(Long idEmpleado);
 }
 

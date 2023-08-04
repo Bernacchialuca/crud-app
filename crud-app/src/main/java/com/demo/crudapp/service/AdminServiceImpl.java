@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Optional<Empleado> getEmpleadoById(Long id) {
+    public Optional<Empleado> findByIdOptional(Long id) {
         return adminRepository.findById(id);
     }
 
@@ -114,5 +114,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Long countBySalarioBetween(int minSalario, int maxSalario) {
         return this.adminRepository.countBySalarioBetween(minSalario,maxSalario);
+    }
+
+    @Override
+    public Empleado getEmpleadoById(Long idEmpleado) {
+        return this.adminRepository.findById(idEmpleado).orElse(null);
     }
 }

@@ -1,7 +1,7 @@
 $(document).ready(function () {
   function loadPage(page) {
     $.ajax({
-      url: '/empleados/listado?page=' + page,
+      url: '/admin/listado?page=' + page,
       type: 'GET',
       success: function (data) {
         $('#listaDeEmpleadosContainer').html($(data).find('#listaDeEmpleadosContainer').html());

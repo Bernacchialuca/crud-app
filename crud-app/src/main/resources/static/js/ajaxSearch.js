@@ -1,6 +1,6 @@
 function performAjaxRequest(formData) {
   $.ajax({
-    url: "/empleados/search",
+    url: "/admin/search",
     type: "GET",
     data: formData,
     success: function (response) {

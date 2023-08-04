@@ -2,8 +2,10 @@ package com.demo.crudapp.controller;
 
 import com.demo.crudapp.entity.Ciudad;
 import com.demo.crudapp.entity.Empleado;
+import com.demo.crudapp.entity.Tarea;
 import com.demo.crudapp.service.CiudadService;
 import com.demo.crudapp.service.AdminService;
+import com.demo.crudapp.service.TareaService;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,13 +32,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/empleados")
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
     @Autowired
     private CiudadService ciudadService;
+    @Autowired
+    private TareaService tareaService;
 
     @GetMapping("/listado")
     public String verEmpleados(@RequestParam Map<String, Object> params, Model model) {
@@ -90,25 +95,25 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("success", mensaje);
 
         this.adminService.save(empleado);
-        return "redirect:/empleados/listado";
+        return "redirect:/admin/listado";
     }
 
 
     @GetMapping("/eliminar/{id}")
     public String eliminarEmpleado(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
-        Optional<Empleado> empleado = this.adminService.getEmpleadoById(id);
+        Optional<Empleado> empleado = this.adminService.findByIdOptional(id);
         this.adminService.delete(id);
         String mensaje = "El empleado " + empleado.get().getNombre() + " " + empleado.get().getApellido() + " fue eliminado correctamente";
 
         redirectAttributes.addFlashAttribute("eliminado", mensaje);
-        return "redirect:/empleados/listado";
+        return "redirect:/admin/listado";
     }
 
     @GetMapping("/editar/{id}")
     public String editarempleado(@PathVariable("id") Long idEmpleado, Model model) {
 
-        Optional<Empleado> empleado = this.adminService.getEmpleadoById(idEmpleado);
+        Optional<Empleado> empleado = this.adminService.findByIdOptional(idEmpleado);
         List<Ciudad> listaDeCiudades = this.ciudadService.getCiudades();
 
         model.addAttribute("titulo", "Editar Empleado");
@@ -121,10 +126,29 @@ public class AdminController {
 
     @GetMapping("/task/{id}")
     public String asignarTarea(@PathVariable("id") Long idEmpleado, Model model) {
-        Optional<Empleado> empleado = this.adminService.getEmpleadoById(idEmpleado);
+        Empleado empleado = this.adminService.getEmpleadoById(idEmpleado);
+        Tarea tarea = new Tarea();
+        tarea.setEmpleado(empleado);
         model.addAttribute("titulo", "Asignar Tareas");
+        model.addAttribute("tarea", tarea);
         model.addAttribute("empleado",empleado);
         return "asignarTarea";
+    }
+
+    @PostMapping("/task/asignar")
+    public String asignarTarea(@ModelAttribute("tarea") @Valid Tarea tarea, BindingResult result, Model model) {
+        tarea.setFechaDeAsignacion(LocalDate.now());
+        tarea.setCompletada(false);
+
+        if (result.hasErrors()) {
+            Empleado empleado = this.adminService.getEmpleadoById(tarea.getEmpleado().getId());
+            model.addAttribute("titulo", "Asignar Tareas");
+            model.addAttribute("empleado", empleado);
+            return "asignarTarea";
+        }
+
+        this.tareaService.save(tarea);
+        return "redirect:/admin/listado";
     }
 
     @GetMapping("/search")

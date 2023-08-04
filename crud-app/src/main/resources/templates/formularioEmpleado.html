@@ -10,7 +10,7 @@
     <br>
     <h1 th:text="${titulo}"></h1>
     <br>
-    <form th:action="@{/empleados/guardar}" th:object="${empleado}" method="post">
+    <form th:action="@{/admin/guardar}" th:object="${empleado}" method="post">
 
         <input type="hidden" th:field="*{id}">
 
