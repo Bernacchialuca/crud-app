@@ -22,13 +22,14 @@ public class Tarea {
     private String descripcion;
     @NotNull(message = "La fecha limite de la tarea no puede estar vacia")
     @DateTimeFormat(pattern="yyyy-MM-dd")
+    @FutureOrPresent(message = "La fecha limite debe ser presente o futura")
     private LocalDate fechaLimite;
     private LocalDate fechaDeAsignacion;
     @NotZero(message = "La prioridad de la tarea no puede estar vacia")
     private String prioridad;
     private Boolean completada;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_empleado")
     private Empleado empleado;
 

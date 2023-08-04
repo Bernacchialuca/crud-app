@@ -6,6 +6,8 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -46,6 +48,9 @@ public class Empleado {
     @NotNull(message = "Por favor, selecciona una ciudad")
     @JoinColumn(name = "id_ciudad")
     private Ciudad ciudad;
+
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.REMOVE)
+    private List<Tarea> tareas;
 
 
 }
