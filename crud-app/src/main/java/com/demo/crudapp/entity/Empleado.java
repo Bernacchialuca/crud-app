@@ -25,7 +25,7 @@ public class Empleado {
     private String apellido;
 
     @NotNull
-    @Size(min = 5, max=8, message = "El campo telefono debe tener entre 5 y 8 números")
+    @Size(min = 5, max=10, message = "El campo telefono debe tener entre 5 y 10 números")
     private String telefono;
 
     @NotNull(message = "Por favor, ingresa un DNI")
@@ -48,9 +48,6 @@ public class Empleado {
     @NotNull(message = "Por favor, selecciona una ciudad")
     @JoinColumn(name = "id_ciudad")
     private Ciudad ciudad;
-
-    @OneToMany(mappedBy = "empleado", cascade = CascadeType.REMOVE)
-    private List<Tarea> tareas;
 
 
 }

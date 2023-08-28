@@ -2,10 +2,8 @@ package com.demo.crudapp.controller;
 
 import com.demo.crudapp.entity.Ciudad;
 import com.demo.crudapp.entity.Empleado;
-import com.demo.crudapp.entity.Tarea;
 import com.demo.crudapp.service.CiudadService;
 import com.demo.crudapp.service.AdminService;
-import com.demo.crudapp.service.TareaService;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
@@ -39,8 +37,6 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private CiudadService ciudadService;
-    @Autowired
-    private TareaService tareaService;
 
     @GetMapping("/listado")
     public String verEmpleados(@RequestParam Map<String, Object> params, Model model) {
@@ -123,34 +119,6 @@ public class AdminController {
         return "formularioEmpleado";
 
     }
-
-    @GetMapping("/task/{id}")
-    public String asignarTarea(@PathVariable("id") Long idEmpleado, Model model) {
-        Empleado empleado = this.adminService.getEmpleadoById(idEmpleado);
-        Tarea tarea = new Tarea();
-        tarea.setEmpleado(empleado);
-        model.addAttribute("titulo", "Asignar Tareas");
-        model.addAttribute("tarea", tarea);
-        model.addAttribute("empleado",empleado);
-        return "asignarTarea";
-    }
-
-    @PostMapping("/task/asignar")
-    public String asignarTarea(@ModelAttribute("tarea") @Valid Tarea tarea, BindingResult result, Model model) {
-        tarea.setFechaDeAsignacion(LocalDate.now());
-        tarea.setCompletada(false);
-
-        if (result.hasErrors()) {
-            Empleado empleado = this.adminService.getEmpleadoById(tarea.getEmpleado().getId());
-            model.addAttribute("titulo", "Asignar Tareas");
-            model.addAttribute("empleado", empleado);
-            return "asignarTarea";
-        }
-
-        this.tareaService.save(tarea);
-        return "redirect:/admin/listado";
-    }
-
     @GetMapping("/search")
     public String buscarEmpleados(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(required = false) String nombreApellido,
