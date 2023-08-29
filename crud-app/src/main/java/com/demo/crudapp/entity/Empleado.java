@@ -25,7 +25,7 @@ public class Empleado {
     private String apellido;
 
     @NotNull
-    @Size(min = 5, max=10, message = "El campo telefono debe tener entre 5 y 10 números")
+    @Size(min = 5, max=12, message = "El campo telefono debe tener entre 5 y 12 números")
     private String telefono;
 
     @NotNull(message = "Por favor, ingresa un DNI")

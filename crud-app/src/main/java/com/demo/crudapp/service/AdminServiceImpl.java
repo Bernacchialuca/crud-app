@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,20 +45,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Page<Empleado> buscarEmpleados(int page, String nombreApellido, String filtro) {
         Pageable pageable = PageRequest.of(page, 10);
-        switch (filtro) {
-            case "mayor-salario":
-                return adminRepository.findAllByOrderBySalarioDesc(pageable);
-            case "menor-salario":
-                return adminRepository.findAllByOrderBySalarioAsc(pageable);
-            case "Project Manager":
-            case "Team Leader":
-            case "Frontend Developer":
-            case "Backend Developer":
-            case "Full Stack Developer":
-                return buscarPorPuesto(filtro, pageable);
-            default:
-                return buscarPorNombreYApellido(nombreApellido, pageable);
-        }
+        return switch (filtro) {
+            case "mayor-salario" -> adminRepository.findAllByOrderBySalarioDesc(pageable);
+            case "menor-salario" -> adminRepository.findAllByOrderBySalarioAsc(pageable);
+            case "Project Manager", "Team Leader", "Frontend Developer", "Backend Developer", "Full Stack Developer" ->
+                    buscarPorPuesto(filtro, pageable);
+            default -> buscarPorNombreYApellido(nombreApellido, pageable);
+        };
     }
 
     @Override
@@ -68,13 +62,13 @@ public class AdminServiceImpl implements AdminService {
         if (nombreApellido != null) {
             String[] parts = nombreApellido.split(" ");
             if (parts.length > 0) {
-                nombre = parts[0];
+                apellido = parts[parts.length - 1]; // Last part is the last name
                 if (parts.length > 1) {
-                    apellido = parts[1];
+                    nombre = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
                 }
             }
         }
-        return adminRepository.findByNombreContainingAndApellidoContaining(nombre, apellido,pageable);
+        return adminRepository.findByNombreContainingAndApellidoContaining(nombre, apellido, pageable);
     }
 
     @Override

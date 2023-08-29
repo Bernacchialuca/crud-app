@@ -22,7 +22,7 @@ CREATE TABLE Empleado (
                           apellido VARCHAR(255),
                           dni BIGINT,
                           email VARCHAR(255),
-                          telefono VARCHAR(20),
+                          telefono VARCHAR(12),
                           salario INT,
                           genero VARCHAR(255),
                           puesto VARCHAR(255),

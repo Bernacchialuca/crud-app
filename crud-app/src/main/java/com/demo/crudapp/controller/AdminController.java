@@ -4,6 +4,7 @@ import com.demo.crudapp.entity.Ciudad;
 import com.demo.crudapp.entity.Empleado;
 import com.demo.crudapp.service.CiudadService;
 import com.demo.crudapp.service.AdminService;
+import com.demo.crudapp.service.ExportarPdfService;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
@@ -37,6 +38,8 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private CiudadService ciudadService;
+    @Autowired
+    private ExportarPdfService exportarPdfService;
 
     @GetMapping("/listado")
     public String verEmpleados(@RequestParam Map<String, Object> params, Model model) {
@@ -146,91 +149,10 @@ public class AdminController {
 
     @GetMapping("/export/pdf")
     public void exportToPDF(HttpServletResponse response) throws IOException, DocumentException {
-        // Retrieve all employees from the service
-        List<Empleado> allEmpleados = adminService.getEmpleados(); // Assuming you have a method like this in the service
 
-        // Set the response content type
-        response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "inline; filename=\"empleados.pdf\"");
+        List<Empleado> allEmpleados = adminService.getEmpleados();
+        this.exportarPdfService.exportToPdf(response,allEmpleados);
 
-        // Create a new PDF document
-        Document document = new Document();
-        PdfWriter.getInstance(document, response.getOutputStream());
-
-        document.open();
-
-        // Create a table for the employee data
-        PdfPTable table = new PdfPTable(8); // 8 columns
-
-        // Set the width percentage of the table (80% in this example)
-        table.setWidthPercentage(110);
-        float[] columnWidths = { 1.8f, 1.8f, 2f, 2f, 5f, 1.5f, 2f, 1.5f };
-        table.setWidths(columnWidths);
-
-        // Define a font for header cells
-        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, Color.white);
-
-        // Define a font for data cells
-        Font dataFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
-
-        // Add headers to the table with color, bold, and centered
-        PdfPCell headerCell;
-        headerCell = createStyledCell("DNI", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Nombre", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Apellido", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Teléfono", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Email", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Salario", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Puesto", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        headerCell = createStyledCell("Ciudad", headerFont, Element.ALIGN_CENTER, Color.BLACK);
-        table.addCell(headerCell);
-
-        // Add the employee data to the table with centered alignment and font size of 10
-        for (Empleado empleado : allEmpleados) {
-            table.addCell(createStyledCell(Long.toString(empleado.getDni()), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell(empleado.getNombre(), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell(empleado.getApellido(), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell(empleado.getTelefono(), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell(empleado.getEmail(), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell("$" + empleado.getSalario(), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell(empleado.getPuesto(), dataFont, Element.ALIGN_CENTER));
-            table.addCell(createStyledCell(empleado.getCiudad().getCiudad(), dataFont, Element.ALIGN_CENTER));
-        }
-
-        // Add the table to the document
-        document.add(table);
-
-        document.close();
     }
-
-    // Helper method to create styled cells
-    private PdfPCell createStyledCell(String text, Font font, int horizontalAlignment, Color backgroundColor) {
-        PdfPCell cell = new PdfPCell(new Phrase(text, font));
-        cell.setHorizontalAlignment(horizontalAlignment);
-        cell.setBackgroundColor(backgroundColor);
-        cell.setPadding(5);
-        return cell;
-    }
-
-    // Helper method to create styled cells without background color
-    private PdfPCell createStyledCell(String text, Font font, int horizontalAlignment) {
-        return createStyledCell(text, font, horizontalAlignment, Color.WHITE);
-    }
-
-
 
 }
