@@ -13,7 +13,6 @@
         <th scope="col">Puesto</th>
         <th scope="col">Ciudad</th>
         <th scope="col">Acciones</th>
-        <th style="text-align:center" scope="col">Asignar tarea</th>
     </tr>
     </thead>
     <tbody>
@@ -32,8 +31,6 @@
             <a th:href="@{'/admin/eliminar/' + ${empleados.id}}" name="deleteButton"><img class="img-acciones"
                                                                                               th:src="@{/svg/close-square-icon.svg}"></a>
         </td>
-        <td style="text-align:center"> <a th:href="@{'/admin/task/' + ${empleados.id}}"><img class="img-task"
-                                                                                                 th:src="@{/img/task.png}"></a></td>
     </tr>
     </tbody>
 </table>

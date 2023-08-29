@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface AdminRepository extends JpaRepository<Empleado, Long> {
 
-    Page<Empleado> findByNombreContainingAndApellidoContaining(String nombre, String apellido, Pageable pageable);
 
     Page<Empleado> findByPuesto(String filtro, Pageable pageable);
 
@@ -28,4 +27,8 @@ public interface AdminRepository extends JpaRepository<Empleado, Long> {
 
     Long countBySalarioGreaterThan(int salario);
     Long countBySalarioBetween(int minSalario, int maxSalario);
+
+    Page<Empleado> findByNombreContainingOrApellidoContaining(String nombreApellido, String nombreApellido1, Pageable pageable);
+
+    Page<Empleado> findByNombreContainingAndApellidoContaining(String nombre, String apellido, Pageable pageable);
 }
