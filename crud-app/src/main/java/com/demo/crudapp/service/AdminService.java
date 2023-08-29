@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface AdminService {
@@ -36,5 +37,13 @@ public interface AdminService {
     Long countBySalarioBetween(int minSalario, int maxSalario);
 
     Empleado getEmpleadoById(Long idEmpleado);
+
+    Map<String, Long> obtenerEmpleadosPorCiudad();
+
+    Map<String, Long> obtenerEmpleadosPorPuesto();
+
+    Map<String, Long> obtenerEmpleadosPorGenero();
+
+    Map<String, Long> obtenerEmpleadosPorSalario();
 }
 

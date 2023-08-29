@@ -8,9 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -40,6 +38,56 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void delete(Long id) {
         adminRepository.deleteById(id);
+    }
+
+    public Map<String, Long> obtenerEmpleadosPorPuesto() {
+        Map<String, Long> empleadosPorPuesto = new TreeMap<>();
+
+        empleadosPorPuesto.put("Frontend Developers", countByPuesto("Frontend Developer"));
+        empleadosPorPuesto.put("Backend Developers", countByPuesto("Backend Developer"));
+        empleadosPorPuesto.put("Full Stack Developers", countByPuesto("Full Stack Developer"));
+        empleadosPorPuesto.put("Team Leaders", countByPuesto("Team Leader"));
+        empleadosPorPuesto.put("Project Managers", countByPuesto("Project Manager"));
+
+        return empleadosPorPuesto;
+    }
+
+    public Map<String, Long> obtenerEmpleadosPorCiudad() {
+        Map<String, Long> empleadosPorCiudad = new TreeMap<>();
+
+        empleadosPorCiudad.put("Madrid", countEmpleadosPorCiudad("Madrid"));
+        empleadosPorCiudad.put("Los Angeles", countEmpleadosPorCiudad("Los Angeles"));
+        empleadosPorCiudad.put("Paris", countEmpleadosPorCiudad("Paris"));
+        empleadosPorCiudad.put("India", countEmpleadosPorCiudad("India"));
+        empleadosPorCiudad.put("Mexico", countEmpleadosPorCiudad("Mexico"));
+        empleadosPorCiudad.put("Buenos Aires", countEmpleadosPorCiudad("Buenos Aires"));
+        empleadosPorCiudad.put("Tokio", countEmpleadosPorCiudad("Tokio"));
+        empleadosPorCiudad.put("Londres", countEmpleadosPorCiudad("Londres"));
+
+        return empleadosPorCiudad;
+    }
+
+    public Map<String, Long> obtenerEmpleadosPorGenero() {
+        Map<String, Long> empleadosPorGenero = new TreeMap<>();
+
+        empleadosPorGenero.put("Masculino", countEmpleadosPorGenero("Masculino"));
+        empleadosPorGenero.put("Femenino", countEmpleadosPorGenero("Femenino"));
+        empleadosPorGenero.put("Otro", countEmpleadosPorGenero("Otro"));
+
+        return empleadosPorGenero;
+    }
+
+    public Map<String, Long> obtenerEmpleadosPorSalario() {
+        Map<String, Long> empleadosPorSalario = new LinkedHashMap<>();
+
+        empleadosPorSalario.put("Menor a 2000", countBySalarioLessThan(2000));
+        empleadosPorSalario.put("Entre 2000 a 4000", countBySalarioBetween(2000, 4000));
+        empleadosPorSalario.put("Entre 4000 a 6000", countBySalarioBetween(4000, 6000));
+        empleadosPorSalario.put("Entre 6000 a 8000", countBySalarioBetween(6000, 8000));
+        empleadosPorSalario.put("Entre 8000 a 10000", countBySalarioBetween(8000, 10000));
+        empleadosPorSalario.put("Mayor a 10000", countBySalarioGreaterThan(10000));
+
+        return empleadosPorSalario;
     }
 
     @Override
