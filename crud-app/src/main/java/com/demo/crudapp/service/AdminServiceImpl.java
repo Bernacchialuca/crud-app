@@ -13,12 +13,8 @@ import java.util.*;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    private final AdminRepository adminRepository;
-
     @Autowired
-    public AdminServiceImpl(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
-    }
+    private AdminRepository adminRepository;
 
     @Override
     public List<Empleado> getEmpleados() {
@@ -104,19 +100,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Page<Empleado> buscarPorNombreYApellido(String nombreApellido, Pageable pageable) {
-        String nombre = "";
-        String apellido = "";
 
-        if (nombreApellido != null) {
-            String[] parts = nombreApellido.split(" ");
-            if (parts.length > 0) {
-                apellido = parts[parts.length - 1]; // Last part is the last name
-                if (parts.length > 1) {
-                    nombre = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
-                }
+        Page<Empleado> pagePersona = null;
+
+        if (nombreApellido != null && !nombreApellido.isEmpty()) {
+            if (nombreApellido.contains(" ")) {
+                String[] partes = nombreApellido.split(" ", 2);
+                String nombre = partes[0];
+                String apellido = partes[1];
+                pagePersona = this.adminRepository.findByNombreContainingAndApellidoContaining(nombre,apellido,pageable);
+            } else {
+                pagePersona = this.adminRepository.findByNombreContainingOrApellidoContaining(nombreApellido,nombreApellido,pageable);
             }
         }
-        return adminRepository.findByNombreContainingAndApellidoContaining(nombre, apellido, pageable);
+
+        return pagePersona;
     }
 
     @Override
